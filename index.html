@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>LexForge | Gerador Robusto de Contratos com Cláusulas Inteligentes</title>
+  <title>LexForge | Gerador Robusto de Contratos + IA Clause Library</title>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- html2pdf -->
@@ -27,6 +27,7 @@
       margin: 0 auto;
     }
 
+    /* Header */
     .header {
       text-align: center;
       margin-bottom: 2rem;
@@ -48,22 +49,22 @@
       font-weight: 500;
     }
 
+    /* Dashboard 2 colunas */
     .dashboard {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
       gap: 2rem;
+      margin-bottom: 2.5rem;
     }
 
-    /* painel esquerdo */
+    /* Painel esquerdo */
     .config-panel {
       background: white;
       border-radius: 2rem;
       box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
       padding: 1.8rem;
-      transition: all 0.2s;
       border: 1px solid #e2edf2;
     }
-
     .config-panel h2 {
       font-size: 1.5rem;
       font-weight: 700;
@@ -72,7 +73,6 @@
       margin-bottom: 1.5rem;
       color: #0e3b4f;
     }
-
     .form-group {
       margin-bottom: 1.2rem;
     }
@@ -113,6 +113,7 @@
       margin-bottom: 1rem;
     }
 
+    /* Clause library */
     .clause-library {
       margin-top: 1.5rem;
       background: #f9fbfd;
@@ -154,6 +155,13 @@
       justify-content: space-between;
       align-items: center;
     }
+    .btn-remove-clause {
+      background: none;
+      border: none;
+      color: #b13e3e;
+      cursor: pointer;
+      font-size: 1rem;
+    }
 
     .action-buttons {
       display: flex;
@@ -187,7 +195,7 @@
       color: #1C5D7A;
     }
 
-    /* preview */
+    /* Preview */
     .preview-panel {
       background: white;
       border-radius: 2rem;
@@ -257,21 +265,55 @@
       transition: 0.2s;
       z-index: 1000;
     }
+
+    /* Tabela comparativa (em inglês) */
+    .comparison-section {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      margin-top: 1rem;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.08);
+      border: 1px solid #e2edf2;
+    }
+    .comparison-section h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #0e3b4f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #dce7ef;
+    }
+    th {
+      background: #eef2f7;
+      color: #1C5D7A;
+      font-weight: 700;
+    }
     @media (max-width: 850px) {
       .dashboard { grid-template-columns: 1fr; }
       body { padding: 1rem; }
+      table { font-size: 0.7rem; }
     }
   </style>
 </head>
 <body>
 <div class="app-container">
   <div class="header">
-    <h1><i class="fas fa-scale-balanced"></i> LexForge · Contratos Robusto com Cláusulas Avançadas</h1>
-    <p>+10 tipos de contratos • Cláusulas baseadas no Código Civil, LGPD e normas • Adicione cláusulas extras com 1 clique</p>
+    <h1><i class="fas fa-scale-balanced"></i> LexForge · Contratos Robusto com Cláusulas Inteligentes</h1>
+    <p>10+ tipos de contratos • Cláusulas baseadas no Código Civil, LGPD • Adicione cláusulas extras com 1 clique • Exporte para PDF</p>
   </div>
 
   <div class="dashboard">
-    <!-- PAINEL DE CONFIGURAÇÃO -->
+    <!-- CONFIGURATION PANEL -->
     <div class="config-panel">
       <h2><i class="fas fa-gear"></i> Configurar Contrato</h2>
       <div class="form-group">
@@ -291,19 +333,19 @@
       </div>
       <div id="dynamicFieldsContainer"></div>
 
-      <!-- Biblioteca de cláusulas adicionais (somente para custom e alguns) -->
+      <!-- Clause library (only for custom contracts) -->
       <div class="clause-library" id="clauseLibraryPanel" style="display: none;">
-        <h4><i class="fas fa-list"></i> Cláusulas adicionais (clique para adicionar)</h4>
+        <h4><i class="fas fa-list"></i> 📚 Clause Library (add extra clauses)</h4>
         <div id="clauseTags">
-          <span class="clause-tag" data-clause="confidencialidade">Confidencialidade</span>
-          <span class="clause-tag" data-clause="penalidade">Multa por atraso</span>
-          <span class="clause-tag" data-clause="rescisao">Rescisão antecipada</span>
-          <span class="clause-tag" data-clause="lgpd">LGPD - Tratamento de dados</span>
-          <span class="clause-tag" data-clause="propriedadeIntelectual">Propriedade Intelectual</span>
-          <span class="clause-tag" data-clause="foro">Foro de eleição (adicional)</span>
+          <span class="clause-tag" data-clause="confidencialidade">Confidentiality</span>
+          <span class="clause-tag" data-clause="penalidade">Late Payment Penalty</span>
+          <span class="clause-tag" data-clause="rescisao">Early Termination</span>
+          <span class="clause-tag" data-clause="lgpd">LGPD - Data Protection</span>
+          <span class="clause-tag" data-clause="propriedadeIntelectual">Intellectual Property</span>
+          <span class="clause-tag" data-clause="foro">Additional Jurisdiction Clause</span>
         </div>
         <div class="extra-clauses-area" id="extraClausesList">
-          <p style="font-size:0.75rem; color:#5f7f9a;">Cláusulas adicionadas aparecerão aqui.</p>
+          <p style="font-size:0.75rem; color:#5f7f9a;">No extra clauses added. Click on any tag above.</p>
         </div>
       </div>
 
@@ -314,7 +356,7 @@
       <div class="badge-type"><i class="fas fa-gavel"></i> Cláusulas com base na legislação brasileira (Lei 10.406/02, LGPD)</div>
     </div>
 
-    <!-- PREVIEW -->
+    <!-- PREVIEW PANEL -->
     <div class="preview-panel">
       <div class="preview-header">
         <h3><i class="fas fa-file-lines"></i> Minuta do Contrato</h3>
@@ -324,10 +366,29 @@
         </div>
       </div>
       <div id="contractPreview" class="contract-content">
-        <p style="text-align:center; color:gray;">Selecione um tipo e preencha os dados</p>
+        <p style="text-align:center; color:gray;">Selecione um tipo e preencha os dados<br>⇡ O contrato será gerado automaticamente ⇡</p>
       </div>
     </div>
   </div>
+
+  <!-- COMPARISON TABLE IN ENGLISH (informações em inglês) -->
+  <div class="comparison-section">
+    <h3><i class="fas fa-chart-simple"></i> AI Contract Platforms Comparison</h3>
+    <table>
+      <thead>
+        <tr><th>Solution</th><th>Target Audience</th><th>Pricing Model</th><th>Key Robust Features</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Cora</strong></td><td>Small businesses, MEIs</td><td><strong>Free</strong> (for CNPJ)</td><td>Simplicity, focus on service agreements.</td></tr>
+        <tr><td><strong>Markjus IA</strong></td><td>Lawyers, small/medium law firms</td><td><strong>R$ 57/month</strong> or <strong>R$ 397/year</strong></td><td>Unlimited generation, automatic review, risk detection, 50+ templates.</td></tr>
+        <tr><td><strong>Cláusula AI</strong></td><td>Professionals, freelancers, SMEs</td><td>Free plan + credits (from R$ 4.90)</td><td>Risk analysis, abusive clause detection based on Brazilian Consumer Protection Code.</td></tr>
+        <tr><td><strong>Docusign IAM</strong></td><td>Medium to large enterprises</td><td><strong>Custom quote</strong> (enterprise)</td><td>Proprietary AI (Iris) for intelligent review, system integrations, governance.</td></tr>
+        <tr><td><strong>ProJuris</strong></td><td>In-house legal departments, large firms</td><td><strong>Custom quote</strong></td><td>AI‑powered Contract Lifecycle Management (CLM), complex workflow automation.</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.7rem; margin-top:0.8rem; color:#5f7f9a;">* Prices are approximate and subject to change. Always verify with the provider.</p>
+  </div>
+
   <footer style="text-align:center; margin-top:2rem; font-size:0.75rem; color:#5f7f9a;">
     <i class="fas fa-balance-scale"></i> Ferramenta auxiliar – sempre recomendada validação por advogado.
   </footer>
@@ -343,7 +404,7 @@
       if (m === '<') return '&lt;';
       if (m === '>') return '&gt;';
       return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, c => c);
+    });
   }
 
   function showToast(msg, isErr = false) {
@@ -356,9 +417,9 @@
 
   let currentContractType = 'prestacaoServicos';
   let currentFieldValues = {};
-  let extraClauses = []; // armazena textos adicionais
+  let extraClauses = [];
 
-  // ---------- BIBLIOTECA DE CLAUSULAS EXTRAS ----------
+  // Clause texts (in Portuguese, as they are legal clauses for Brazilian context)
   const clauseTexts = {
     confidencialidade: "Cláusula de Confidencialidade: As partes obrigam-se a manter sigilo absoluto sobre todas as informações confidenciais da outra parte, sob pena de indenização por perdas e danos, nos termos do art. 186 e 927 do Código Civil.",
     penalidade: "Cláusula Penal: Em caso de atraso no cumprimento de qualquer obrigação pecuniária, incidirá multa de 2% (dois por cento) sobre o valor devido, além de juros de mora de 1% ao mês, conforme art. 406 do CC.",
@@ -388,13 +449,13 @@
     const container = document.getElementById('extraClausesList');
     if (!container) return;
     if (extraClauses.length === 0) {
-      container.innerHTML = '<p style="font-size:0.75rem; color:#5f7f9a;">Nenhuma cláusula extra adicionada.</p>';
+      container.innerHTML = '<p style="font-size:0.75rem; color:#5f7f9a;">No extra clauses added. Click on any tag above.</p>';
       return;
     }
     container.innerHTML = extraClauses.map((clause, idx) => `
       <div class="extra-clause-item">
         <span style="flex:1; font-size:0.8rem;">📌 ${clause.substring(0, 100)}${clause.length > 100 ? '…' : ''}</span>
-        <button class="btn-remove-clause" data-idx="${idx}" style="background:none; border:none; color:#b13e3e; cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+        <button class="btn-remove-clause" data-idx="${idx}"><i class="fas fa-trash-alt"></i></button>
       </div>
     `).join('');
     document.querySelectorAll('.btn-remove-clause').forEach(btn => {
@@ -405,7 +466,7 @@
     });
   }
 
-  // ---------- DEFINIÇÕES DE CONTRATOS (MODELOS ROBUSTOS) ----------
+  // ---------- CONTRACT DEFINITIONS (robust, with legal basis) ----------
   const contractDefinitions = {
     prestacaoServicos: {
       name: "Contrato de Prestação de Serviços (com LGPD)",
@@ -419,8 +480,7 @@
         { name: "foro", label: "Foro", type: "text", default: "São Paulo/SP" },
         { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
       ],
-      template: (vals) => {
-        let base = `<h1>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h1>
+      template: (vals) => `<h1>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h1>
         <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
         <p><strong>CONTRATANTE:</strong> ${escapeHtml(vals.contratante)}<br><strong>CONTRATADO:</strong> ${escapeHtml(vals.contratado)}</p>
         <h2>Cláusula 1 – Objeto</h2><p>${escapeHtml(vals.objeto)}</p>
@@ -428,28 +488,25 @@
         <h2>Cláusula 3 – Prazo</h2><p>${escapeHtml(vals.prazo)}, podendo ser prorrogado.</p>
         <h2>Cláusula 4 – Obrigações das Partes</h2><p>O CONTRATADO executará os serviços com diligência. O CONTRATANTE fornecerá informações necessárias e efetuará os pagamentos em dia.</p>
         <h2>Cláusula 5 – LGPD</h2><p>As partes declaram que cumprirão a Lei Geral de Proteção de Dados, tratando apenas os dados essenciais para execução do contrato.</p>
-        <h2>Cláusula 6 – Foro</h2><p>Fica eleito o foro da ${escapeHtml(vals.foro)}.</p>`;
-        return base + getSignaturesBlock(vals.contratante, vals.contratado);
-      }
+        <h2>Cláusula 6 – Foro</h2><p>Fica eleito o foro da ${escapeHtml(vals.foro)}.</p>`
     },
     nda: {
       name: "Acordo de Confidencialidade (NDA)",
       fields: [
         { name: "parteDivulgadora", label: "Parte Divulgadora", type: "text", default: "InovaTech SA" },
         { name: "parteReceptora", label: "Parte Receptora", type: "text", default: "Consultor XYZ" },
-        { name: "informacoesConfidenciais", label: "Definição de informações confidenciais", type: "textarea", default: "Dados financeiros, estratégias, códigos-fonte, know-how." },
+        { name: "informacoesConfidenciais", label: "Informações confidenciais", type: "textarea", default: "Dados financeiros, estratégias, códigos-fonte." },
         { name: "prazoConfidencialidade", label: "Prazo de sigilo (anos)", type: "text", default: "5 anos" },
         { name: "foro", label: "Foro", type: "text", default: "Rio de Janeiro/RJ" },
         { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
       ],
       template: (vals) => `<h1>ACORDO DE CONFIDENCIALIDADE</h1>
-      <p>Data: ${escapeHtml(vals.dataContrato)}</p>
-      <p><strong>Divulgadora:</strong> ${escapeHtml(vals.parteDivulgadora)}<br><strong>Receptora:</strong> ${escapeHtml(vals.parteReceptora)}</p>
-      <h2>Cláusula 1 – Informações Confidenciais</h2><p>Consideram-se confidenciais: ${escapeHtml(vals.informacoesConfidenciais)}.</p>
-      <h2>Cláusula 2 – Obrigação de Sigilo</h2><p>A Parte Receptora não poderá revelar, copiar ou utilizar as informações senão para o propósito autorizado, sob pena de responsabilização civil e criminal (art. 153 do CP).</p>
-      <h2>Cláusula 3 – Prazo</h2><p>A obrigação de sigilo perdura por ${escapeHtml(vals.prazoConfidencialidade)} após o término deste acordo.</p>
-      <h2>Cláusula 4 – Foro</h2><p>Foro eleito: ${escapeHtml(vals.foro)}.</p>
-      ${getSignaturesBlock(vals.parteDivulgadora, vals.parteReceptora)}`
+        <p>Data: ${escapeHtml(vals.dataContrato)}</p>
+        <p><strong>Divulgadora:</strong> ${escapeHtml(vals.parteDivulgadora)}<br><strong>Receptora:</strong> ${escapeHtml(vals.parteReceptora)}</p>
+        <h2>Cláusula 1 – Informações Confidenciais</h2><p>${escapeHtml(vals.informacoesConfidenciais)}</p>
+        <h2>Cláusula 2 – Obrigação de Sigilo</h2><p>A Parte Receptora não poderá revelar, copiar ou utilizar as informações, sob pena de responsabilização civil e criminal (art. 153 do CP).</p>
+        <h2>Cláusula 3 – Prazo</h2><p>A obrigação de sigilo perdura por ${escapeHtml(vals.prazoConfidencialidade)} após o término deste acordo.</p>
+        <h2>Cláusula 4 – Foro</h2><p>Foro eleito: ${escapeHtml(vals.foro)}.</p>`
     },
     parceria: {
       name: "Contrato de Parceria Comercial",
@@ -463,28 +520,27 @@
         { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
       ],
       template: (vals) => `<h1>CONTRATO DE PARCERIA COMERCIAL</h1>
-      <p>Data: ${escapeHtml(vals.dataContrato)}</p>
-      <p><strong>Parte A:</strong> ${escapeHtml(vals.parteA)}<br><strong>Parte B:</strong> ${escapeHtml(vals.parteB)}</p>
-      <h2>Cláusula 1 – Objeto</h2><p>${escapeHtml(vals.objetivo)}</p>
-      <h2>Cláusula 2 – Condições Financeiras</h2><p>A divisão de receitas será: ${escapeHtml(vals.divisaoReceitas)}.</p>
-      <h2>Cláusula 3 – Direitos e Deveres</h2><p>As partes agirão com boa-fé, compartilhando recursos conforme planejamento comum. A rescisão antecipada requer aviso de 30 dias.</p>
-      <h2>Cláusula 4 – Foro</h2><p>${escapeHtml(vals.foro)} para solução de controvérsias.</p>
-      ${getSignaturesBlock(vals.parteA, vals.parteB)}`
+        <p>Data: ${escapeHtml(vals.dataContrato)}</p>
+        <p><strong>Parte A:</strong> ${escapeHtml(vals.parteA)}<br><strong>Parte B:</strong> ${escapeHtml(vals.parteB)}</p>
+        <h2>Cláusula 1 – Objeto</h2><p>${escapeHtml(vals.objetivo)}</p>
+        <h2>Cláusula 2 – Condições Financeiras</h2><p>Divisão de receitas: ${escapeHtml(vals.divisaoReceitas)}.</p>
+        <h2>Cláusula 3 – Direitos e Deveres</h2><p>As partes agirão com boa-fé. Rescisão requer aviso de 30 dias.</p>
+        <h2>Cláusula 4 – Foro</h2><p>${escapeHtml(vals.foro)} para solução de controvérsias.</p>`
     },
-    // outros contratos (locacao, compraVenda, trabalho, emprestimo, licencaSoftware, comodato) resumidos por espaço, mas mantendo robustez
-    locacao: { name: "Locação Residencial", fields: [{name:"locador",default:"Maria Lopes"},{name:"locatario",default:"Carlos Andrade"},{name:"imovel",default:"Rua X, 123"},{name:"valorAluguel",default:"R$ 1.500"},{name:"vencimento",default:"10"},{name:"duracao",default:"30 meses"},{name:"foro",default:"São Paulo/SP"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>CONTRATO DE LOCAÇÃO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Locador:${escapeHtml(v.locador)}<br>Locatário:${escapeHtml(v.locatario)}</p><h2>Imóvel</h2><p>${escapeHtml(v.imovel)}</p><h2>Aluguel</h2><p>${escapeHtml(v.valorAluguel)} vencimento dia ${escapeHtml(v.vencimento)}</p><h2>Prazo</h2><p>${escapeHtml(v.duracao)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.locador,v.locatario)}` },
-    compraVenda: { name: "Compra e Venda", fields: [{name:"vendedor",default:"Tech Store"},{name:"comprador",default:"João Comprador"},{name:"item",default:"Notebook"},{name:"valorVenda",default:"R$ 3.200"},{name:"condicoes",default:"À vista"},{name:"prazoEntrega",default:"5 dias"},{name:"foro",default:"Curitiba/PR"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>COMPRA E VENDA</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Vendedor:${escapeHtml(v.vendedor)}<br>Comprador:${escapeHtml(v.comprador)}</p><h2>Objeto</h2><p>${escapeHtml(v.item)}</p><h2>Preço</h2><p>${escapeHtml(v.valorVenda)} - ${escapeHtml(v.condicoes)}</p><h2>Entrega</h2><p>${escapeHtml(v.prazoEntrega)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.vendedor,v.comprador)}` },
-    trabalho: { name: "Contrato PJ", fields: [{name:"empregador",default:"Corp Ltda"},{name:"empregado",default:"Maria PJ"},{name:"cargo",default:"Analista"},{name:"salario",default:"R$ 6.000"},{name:"jornada",default:"40h"},{name:"beneficios",default:"Vale alimentação"},{name:"foro",default:"Porto Alegre/RS"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>PRESTAÇÃO DE SERVIÇOS (PJ)</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Contratante:${escapeHtml(v.empregador)}<br>Prestador:${escapeHtml(v.empregado)}</p><h2>Função</h2><p>${escapeHtml(v.cargo)}</p><h2>Remuneração</h2><p>${escapeHtml(v.salario)} - Jornada ${escapeHtml(v.jornada)}</p><h2>Benefícios</h2><p>${escapeHtml(v.beneficios)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.empregador,v.empregado)}` },
-    emprestimo: { name: "Empréstimo Pessoal", fields: [{name:"credor",default:"José Credor"},{name:"devedor",default:"Maria Devedora"},{name:"valorEmprestimo",default:"R$ 5.000"},{name:"juros",default:"2% a.m."},{name:"prazoMeses",default:"12 meses"},{name:"garantias",default:"Sem garantias"},{name:"foro",default:"Salvador/BA"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>EMPRÉSTIMO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Credor:${escapeHtml(v.credor)}<br>Devedor:${escapeHtml(v.devedor)}</p><h2>Valor e Juros</h2><p>${escapeHtml(v.valorEmprestimo)} - Juros ${escapeHtml(v.juros)}</p><h2>Prazo</h2><p>${escapeHtml(v.prazoMeses)} - Garantias: ${escapeHtml(v.garantias)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.credor,v.devedor)}` },
-    licencaSoftware: { name: "Licenciamento de Software", fields: [{name:"licenciante",default:"SoftSys"},{name:"licenciado",default:"Cliente X"},{name:"software",default:"ERP Gestão"},{name:"valorLicenca",default:"R$ 10.000"},{name:"prazo",default:"1 ano"},{name:"foro",default:"Florianópolis/SC"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>LICENÇA DE SOFTWARE</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Licenciante:${escapeHtml(v.licenciante)}<br>Licenciado:${escapeHtml(v.licenciado)}</p><h2>Objeto</h2><p>${escapeHtml(v.software)}</p><h2>Valor e Vigência</h2><p>${escapeHtml(v.valorLicenca)} por ${escapeHtml(v.prazo)}</p><h2>Propriedade Intelectual</h2><p>O software é protegido pela Lei 9.609/98, sendo vedada a cópia ou engenharia reversa.</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.licenciante,v.licenciado)}` },
-    comodato: { name: "Comodato (Bens móveis)", fields: [{name:"comodante",default:"Fábrica ABC"},{name:"comodatario",default:"Logística Ltda"},{name:"bem",default:"Empilhadeira modelo X"},{name:"prazoUso",default:"6 meses"},{name:"foro",default:"Campinas/SP"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>CONTRATO DE COMODATO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Comodante:${escapeHtml(v.comodante)}<br>Comodatário:${escapeHtml(v.comodatario)}</p><h2>Bem</h2><p>${escapeHtml(v.bem)}</p><h2>Prazo</h2><p>${escapeHtml(v.prazoUso)}</p><h2>Obrigações</h2><p>O comodatário deverá conservar o bem e devolvê-lo nas mesmas condições, sob pena de indenização (art. 579 CC).</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>${getSignaturesBlock(v.comodante,v.comodatario)}` },
+    // additional contract types (simplified but robust)
+    locacao: { name: "Locação Residencial", fields: [{name:"locador",default:"Maria Lopes"},{name:"locatario",default:"Carlos Andrade"},{name:"imovel",default:"Rua X, 123"},{name:"valorAluguel",default:"R$ 1.500"},{name:"vencimento",default:"10"},{name:"duracao",default:"30 meses"},{name:"foro",default:"São Paulo/SP"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>CONTRATO DE LOCAÇÃO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Locador:${escapeHtml(v.locador)}<br>Locatário:${escapeHtml(v.locatario)}</p><h2>Imóvel</h2><p>${escapeHtml(v.imovel)}</p><h2>Aluguel</h2><p>${escapeHtml(v.valorAluguel)} vencimento dia ${escapeHtml(v.vencimento)}</p><h2>Prazo</h2><p>${escapeHtml(v.duracao)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
+    compraVenda: { name: "Compra e Venda", fields: [{name:"vendedor",default:"Tech Store"},{name:"comprador",default:"João Comprador"},{name:"item",default:"Notebook"},{name:"valorVenda",default:"R$ 3.200"},{name:"condicoes",default:"À vista"},{name:"prazoEntrega",default:"5 dias"},{name:"foro",default:"Curitiba/PR"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>COMPRA E VENDA</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Vendedor:${escapeHtml(v.vendedor)}<br>Comprador:${escapeHtml(v.comprador)}</p><h2>Objeto</h2><p>${escapeHtml(v.item)}</p><h2>Preço</h2><p>${escapeHtml(v.valorVenda)} - ${escapeHtml(v.condicoes)}</p><h2>Entrega</h2><p>${escapeHtml(v.prazoEntrega)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
+    trabalho: { name: "Contrato PJ", fields: [{name:"empregador",default:"Corp Ltda"},{name:"empregado",default:"Maria PJ"},{name:"cargo",default:"Analista"},{name:"salario",default:"R$ 6.000"},{name:"jornada",default:"40h"},{name:"beneficios",default:"Vale alimentação"},{name:"foro",default:"Porto Alegre/RS"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>PRESTAÇÃO DE SERVIÇOS (PJ)</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Contratante:${escapeHtml(v.empregador)}<br>Prestador:${escapeHtml(v.empregado)}</p><h2>Função</h2><p>${escapeHtml(v.cargo)}</p><h2>Remuneração</h2><p>${escapeHtml(v.salario)} - Jornada ${escapeHtml(v.jornada)}</p><h2>Benefícios</h2><p>${escapeHtml(v.beneficios)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
+    emprestimo: { name: "Empréstimo Pessoal", fields: [{name:"credor",default:"José Credor"},{name:"devedor",default:"Maria Devedora"},{name:"valorEmprestimo",default:"R$ 5.000"},{name:"juros",default:"2% a.m."},{name:"prazoMeses",default:"12 meses"},{name:"garantias",default:"Sem garantias"},{name:"foro",default:"Salvador/BA"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>EMPRÉSTIMO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Credor:${escapeHtml(v.credor)}<br>Devedor:${escapeHtml(v.devedor)}</p><h2>Valor e Juros</h2><p>${escapeHtml(v.valorEmprestimo)} - Juros ${escapeHtml(v.juros)}</p><h2>Prazo</h2><p>${escapeHtml(v.prazoMeses)} - Garantias: ${escapeHtml(v.garantias)}</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
+    licencaSoftware: { name: "Licenciamento de Software", fields: [{name:"licenciante",default:"SoftSys"},{name:"licenciado",default:"Cliente X"},{name:"software",default:"ERP Gestão"},{name:"valorLicenca",default:"R$ 10.000"},{name:"prazo",default:"1 ano"},{name:"foro",default:"Florianópolis/SC"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>LICENÇA DE SOFTWARE</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Licenciante:${escapeHtml(v.licenciante)}<br>Licenciado:${escapeHtml(v.licenciado)}</p><h2>Objeto</h2><p>${escapeHtml(v.software)}</p><h2>Valor e Vigência</h2><p>${escapeHtml(v.valorLicenca)} por ${escapeHtml(v.prazo)}</p><h2>Propriedade Intelectual</h2><p>Protegido pela Lei 9.609/98, vedada cópia ou engenharia reversa.</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
+    comodato: { name: "Comodato", fields: [{name:"comodante",default:"Fábrica ABC"},{name:"comodatario",default:"Logística Ltda"},{name:"bem",default:"Empilhadeira modelo X"},{name:"prazoUso",default:"6 meses"},{name:"foro",default:"Campinas/SP"},{name:"dataContrato",default:new Date().toLocaleDateString('pt-BR')}], template: (v)=> `<h1>CONTRATO DE COMODATO</h1><p>Data:${escapeHtml(v.dataContrato)}</p><p>Comodante:${escapeHtml(v.comodante)}<br>Comodatário:${escapeHtml(v.comodatario)}</p><h2>Bem</h2><p>${escapeHtml(v.bem)}</p><h2>Prazo</h2><p>${escapeHtml(v.prazoUso)}</p><h2>Obrigações</h2><p>Conservação e devolução nas mesmas condições (art. 579 CC).</p><h2>Foro</h2><p>${escapeHtml(v.foro)}</p>` },
     custom: {
       name: "Contrato Personalizado",
       fields: [
         { name: "titulo", label: "Título do Contrato", type: "text", default: "CONTRATO PERSONALIZADO" },
         { name: "parteA", label: "Parte A", type: "text", default: "Nome A" },
         { name: "parteB", label: "Parte B", type: "text", default: "Nome B" },
-        { name: "corpoClausulas", label: "Cláusulas principais (descreva livremente)", type: "textarea", default: "As partes estabelecem as seguintes condições comerciais..." },
+        { name: "corpoClausulas", label: "Cláusulas principais", type: "textarea", default: "As partes estabelecem as seguintes condições comerciais..." },
         { name: "foro", label: "Foro", type: "text", default: "Foro Central" },
         { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
       ],
@@ -495,8 +551,7 @@
         <p><strong>PARTE A:</strong> ${escapeHtml(vals.parteA)}<br><strong>PARTE B:</strong> ${escapeHtml(vals.parteB)}</p>
         <h2>Cláusulas Gerais</h2><p>${escapeHtml(vals.corpoClausulas)}</p>
         <h2>Foro</h2><p>${escapeHtml(vals.foro)}</p>
-        ${extrasHtml}
-        ${getSignaturesBlock(vals.parteA, vals.parteB)}`;
+        ${extrasHtml}`
       }
     }
   };
@@ -530,11 +585,18 @@
     if (!def) return;
     def.fields.forEach(f => { if (currentFieldValues[f.name] === undefined) currentFieldValues[f.name] = f.default; });
     let contractHTML = def.template(currentFieldValues);
-    const previewDiv = document.getElementById('contractPreview');
-    previewDiv.innerHTML = contractHTML;
-    if (!previewDiv.querySelector('.contract-sign')) {
-      previewDiv.innerHTML += `<div class="contract-sign"><div class="sign-line"><strong>Parte A</strong><span>Assinatura</span></div><div class="sign-line"><strong>Parte B</strong><span>Assinatura</span></div></div>`;
+    // add signatures for all contracts except custom (custom already includes via template, but ensure)
+    if (currentContractType !== 'custom') {
+      const p1 = currentFieldValues[def.fields[0]?.name] || "Parte A";
+      const p2 = currentFieldValues[def.fields[1]?.name] || "Parte B";
+      contractHTML += getSignaturesBlock(p1, p2);
+    } else {
+      // for custom, already has signatures inside template? we need to add if not present
+      if (!contractHTML.includes('contract-sign')) {
+        contractHTML += getSignaturesBlock(currentFieldValues.parteA, currentFieldValues.parteB);
+      }
     }
+    document.getElementById('contractPreview').innerHTML = contractHTML;
   }
 
   function changeContractType(type) {
@@ -547,7 +609,6 @@
     renderExtraClausesList();
     renderDynamicFields();
     updateContractPreview();
-    // mostrar/esconder biblioteca de cláusulas extras apenas para custom
     const libPanel = document.getElementById('clauseLibraryPanel');
     if (type === 'custom') libPanel.style.display = 'block';
     else libPanel.style.display = 'none';
@@ -574,7 +635,6 @@
     document.getElementById('copyContractBtn').addEventListener('click', copyContractText);
     document.getElementById('pdfDownloadBtn').addEventListener('click', downloadPDF);
     document.getElementById('printContractBtn').addEventListener('click', printContract);
-    // cláusulas tags
     document.getElementById('clauseTags')?.addEventListener('click', (e) => {
       if (e.target.classList.contains('clause-tag')) {
         addExtraClause(e.target.dataset.clause);
