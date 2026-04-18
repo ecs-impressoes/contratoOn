@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>LegisGenius | Criador Poderoso de Contratos</title>
+  <!-- Font Awesome 6 (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- html2pdf library (PDF generation) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e9eef3 0%, #dbe2ea 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1a2c3e;
+    }
+
+    /* main container */
+    .app-container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0B2B40, #1C5D7A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header h1 i {
+      background: none;
+      color: #1C5D7A;
+      font-size: 2.2rem;
+    }
+    .header p {
+      color: #2c4b66;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* grid 2 colunas responsivo */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+    }
+
+    /* painel de configuração (formulário) */
+    .config-panel {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+      padding: 1.8rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .config-panel h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      border-left: 5px solid #1C5D7A;
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+      color: #0e3b4f;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #1f5068;
+      font-size: 0.9rem;
+    }
+    .form-group label i {
+      width: 1.2rem;
+      color: #2c7da0;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #cfdfed;
+      background: #ffffff;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #2c7da0;
+      box-shadow: 0 0 0 3px rgba(44,125,160,0.2);
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    select {
+      cursor: pointer;
+      background-color: #fefefe;
+    }
+    .field-row {
+      margin-bottom: 1rem;
+    }
+    .badge-type {
+      background: #eef2f7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1C5D7A;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.8rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #eef2f9;
+      color: #1f5068;
+    }
+    .btn-primary {
+      background: #1C5D7A;
+      color: white;
+      box-shadow: 0 5px 12px rgba(28,93,122,0.3);
+    }
+    .btn-primary:hover {
+      background: #0e425a;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      border: 1.5px solid #1C5D7A;
+      background: white;
+    }
+    .btn-outline:hover {
+      background: #e3f0f7;
+    }
+    /* preview do contrato */
+    .preview-panel {
+      background: #fefefe;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .preview-header {
+      background: #1a3f50;
+      padding: 1rem 1.8rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .preview-header h3 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .preview-actions button {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      margin-left: 0.6rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 500;
+    }
+    .preview-actions button:hover {
+      background: rgba(255,255,255,0.4);
+    }
+    .contract-content {
+      padding: 2rem 2rem;
+      background: white;
+      min-height: 550px;
+      max-height: 70vh;
+      overflow-y: auto;
+      font-family: 'Georgia', 'Times New Roman', Times, serif;
+      line-height: 1.55;
+      color: #1e2f3a;
+    }
+    .contract-content h1, .contract-content h2 {
+      color: #1C5D7A;
+    }
+    .contract-content h2 {
+      font-size: 1.4rem;
+      border-bottom: 2px solid #cbdde9;
+      padding-bottom: 0.3rem;
+      margin-top: 1.2rem;
+    }
+    .contract-content p {
+      margin: 0.8rem 0;
+      text-align: justify;
+    }
+    .contract-sign {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      border-top: 1px dashed #bbb;
+      padding-top: 1.8rem;
+    }
+    .sign-line {
+      flex: 1;
+      text-align: center;
+    }
+    .sign-line span {
+      display: block;
+      border-top: 1px solid #333;
+      width: 80%;
+      margin: 0.8rem auto 0;
+      padding-top: 0.3rem;
+      font-size: 0.8rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.8rem;
+      color: #3b6e8b;
+    }
+    @media (max-width: 850px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      body {
+        padding: 1rem;
+      }
+    }
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1C5D7A;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      z-index: 1000;
+      opacity: 0;
+      transition: 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="header">
+    <h1><i class="fas fa-file-signature"></i> LegisGenius <span style="font-weight: 500;">| Contratos Poderosos</span></h1>
+    <p>Gere contratos profissionais em segundos • Personalize cada detalhe • Baixe em PDF</p>
+  </div>
+
+  <div class="dashboard">
+    <!-- Painel de configuração esquerdo -->
+    <div class="config-panel">
+      <h2><i class="fas fa-sliders-h"></i> Configurar contrato</h2>
+      <div class="form-group">
+        <label><i class="fas fa-layer-group"></i> Tipo de contrato</label>
+        <select id="contractTypeSelect">
+          <option value="prestacaoServicos">📄 Prestação de Serviços</option>
+          <option value="locacao">🏠 Locação Residencial</option>
+          <option value="compraVenda">🛒 Compra e Venda</option>
+          <option value="trabalho">💼 Contrato de Trabalho (Prestador)</option>
+          <option value="emprestimo">💰 Empréstimo Pessoal</option>
+          <option value="custom">⚙️ Contrato Personalizado (Qualquer tipo)</option>
+        </select>
+      </div>
+      <div id="dynamicFieldsContainer">
+        <!-- Os campos dinâmicos serão injetados aqui via JS -->
+      </div>
+      <div class="action-buttons">
+        <button id="refreshPreviewBtn" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Atualizar contrato</button>
+        <button id="copyContractBtn" class="btn btn-outline"><i class="fas fa-copy"></i> Copiar texto</button>
+      </div>
+      <div class="badge-type" style="margin-top: 1rem;">
+        <i class="fas fa-gavel"></i> Modelos com cláusulas robustas e adaptáveis
+      </div>
+    </div>
+
+    <!-- Painel de pré-visualização direita -->
+    <div class="preview-panel">
+      <div class="preview-header">
+        <h3><i class="fas fa-eye"></i> Pré-visualização do contrato</h3>
+        <div class="preview-actions">
+          <button id="pdfDownloadBtn"><i class="fas fa-file-pdf"></i> Baixar PDF</button>
+          <button id="printContractBtn"><i class="fas fa-print"></i> Imprimir</button>
+        </div>
+      </div>
+      <div id="contractPreview" class="contract-content">
+        <!-- Conteúdo gerado dinamicamente -->
+        <p style="color: gray; text-align: center;">Selecione um tipo e preencha os dados<br>⇡ O contrato será gerado automaticamente ⇡</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <i class="fas fa-balance-scale"></i> Ferramenta legal para criação de minutas • Sempre consulte um advogado para validação final.
+  </footer>
+</div>
+<div id="toastMsg" class="toast-msg">✅ Ação concluída</div>
+
+<script>
+  // ===================== UTIL =====================
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  function showToast(message, isError = false) {
+    const toast = document.getElementById('toastMsg');
+    toast.textContent = isError ? '⚠️ ' + message : '✅ ' + message;
+    toast.style.opacity = '1';
+    toast.style.backgroundColor = isError ? '#b13e3e' : '#1C5D7A';
+    setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+  }
+
+  // Variáveis globais
+  let currentContractType = 'prestacaoServicos';
+  let currentFieldValues = {};  // guarda valores atuais dos campos
+
+  // ===================== DEFINIÇÃO DOS TIPOS DE CONTRATO (campos + template) =====================
+  const contractDefinitions = {
+    prestacaoServicos: {
+      name: "Contrato de Prestação de Serviços",
+      fields: [
+        { name: "contratante", label: "CONTRATANTE (Nome/Razão Social)", type: "text", placeholder: "Ex: Empresa XPTO Ltda", default: "Empresa Exemplo LTDA" },
+        { name: "contratado", label: "CONTRATADO (Prestador)", type: "text", placeholder: "Nome completo ou empresa", default: "João da Silva Serviços" },
+        { name: "objeto", label: "Objeto do serviço (descrição detalhada)", type: "textarea", placeholder: "Descreva as atividades...", default: "Prestação de serviços de consultoria em tecnologia e desenvolvimento de sistemas." },
+        { name: "valor", label: "Valor do serviço (R$)", type: "text", placeholder: "R$ 5.000,00", default: "R$ 4.500,00" },
+        { name: "prazo", label: "Prazo de execução / vigência", type: "text", placeholder: "90 dias ou data específica", default: "90 (noventa) dias corridos" },
+        { name: "formaPagamento", label: "Forma de pagamento", type: "text", placeholder: "Ex: 50% entrada + 50% na entrega", default: "Pagamento em 2 parcelas iguais" },
+        { name: "foro", label: "Foro (cidade/estado)", type: "text", placeholder: "São Paulo/SP", default: "Comarca de São Paulo - SP" },
+        { name: "dataContrato", label: "Data do contrato", type: "text", placeholder: "DD/MM/AAAA", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => {
+        return `<h1 style="text-align:center;">CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h1>
+        <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
+        <p><strong>CONTRATANTE:</strong> ${escapeHtml(vals.contratante)}<br>
+        <strong>CONTRATADO:</strong> ${escapeHtml(vals.contratado)}</p>
+        <h2>CLÁUSULA 1 – OBJETO</h2>
+        <p>O presente contrato tem por objeto a prestação dos seguintes serviços: ${escapeHtml(vals.objeto)}. Os serviços serão realizados de acordo com as especificações acordadas entre as partes.</p>
+        <h2>CLÁUSULA 2 – REMUNERAÇÃO</h2>
+        <p>Pela execução dos serviços, o CONTRATANTE pagará ao CONTRATADO o valor de ${escapeHtml(vals.valor)}. Forma de pagamento: ${escapeHtml(vals.formaPagamento)}.</p>
+        <h2>CLÁUSULA 3 – PRAZO</h2>
+        <p>O prazo de vigência deste contrato é de ${escapeHtml(vals.prazo)}, podendo ser prorrogado mediante acordo escrito.</p>
+        <h2>CLÁUSULA 4 – FORO</h2>
+        <p>Fica eleito o foro da ${escapeHtml(vals.foro)} para dirimir quaisquer questões oriundas do presente contrato.</p>
+        ${getSignaturesBlock(vals.contratante, vals.contratado)}`
+      }
+    },
+    locacao: {
+      name: "Contrato de Locação Residencial",
+      fields: [
+        { name: "locador", label: "LOCADOR (Proprietário)", type: "text", default: "Maria Fernanda Alves", placeholder: "Nome completo" },
+        { name: "locatario", label: "LOCATÁRIO (Inquilino)", type: "text", default: "Carlos Eduardo Mendes", placeholder: "Nome completo" },
+        { name: "imovel", label: "Endereço do imóvel", type: "textarea", default: "Rua das Flores, 123, Apto 42, Bairro Centro, São Paulo/SP", placeholder: "Endereço completo" },
+        { name: "valorAluguel", label: "Valor do aluguel (R$)", type: "text", default: "R$ 1.800,00", placeholder: "Ex: R$ 1.800,00" },
+        { name: "vencimento", label: "Dia de vencimento", type: "text", default: "10 de cada mês", placeholder: "Ex: 10 de cada mês" },
+        { name: "duracao", label: "Duração (meses)", type: "text", default: "12 meses", placeholder: "Ex: 12 meses" },
+        { name: "foro", label: "Foro", type: "text", default: "Comarca de São Paulo/SP", placeholder: "Cidade/UF" },
+        { name: "dataContrato", label: "Data do contrato", type: "text", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => `<h1 style="text-align:center;">CONTRATO DE LOCAÇÃO RESIDENCIAL</h1>
+      <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
+      <p><strong>LOCADOR:</strong> ${escapeHtml(vals.locador)}<br><strong>LOCATÁRIO:</strong> ${escapeHtml(vals.locatario)}</p>
+      <h2>Cláusula 1 – Do Imóvel Locado</h2>
+      <p>O LOCADOR aluga ao LOCATÁRIO o imóvel situado em: ${escapeHtml(vals.imovel)}.</p>
+      <h2>Cláusula 2 – Do Aluguel e Encargos</h2>
+      <p>O valor mensal do aluguel é de ${escapeHtml(vals.valorAluguel)}, com vencimento todo dia ${escapeHtml(vals.vencimento)}.</p>
+      <h2>Cláusula 3 – Prazo de Locação</h2>
+      <p>O prazo de locação é de ${escapeHtml(vals.duracao)}, podendo ser renovado conforme legislação.</p>
+      <h2>Cláusula 4 – Foro</h2>
+      <p>Fica eleito o foro da ${escapeHtml(vals.foro)} para dirimir controvérsias.</p>
+      ${getSignaturesBlock(vals.locador, vals.locatario)}`
+    },
+    compraVenda: {
+      name: "Contrato de Compra e Venda",
+      fields: [
+        { name: "vendedor", label: "VENDEDOR", type: "text", default: "TechCell Comércio Ltda", placeholder: "Nome/Razão" },
+        { name: "comprador", label: "COMPRADOR", type: "text", default: "Roberto Nogueira", placeholder: "Nome" },
+        { name: "item", label: "Descrição do bem/produto", type: "textarea", default: "1 Notebook Dell Inspiron, 16GB RAM, SSD 512GB", placeholder: "Descreva detalhadamente" },
+        { name: "valorVenda", label: "Valor total (R$)", type: "text", default: "R$ 4.299,00", placeholder: "R$" },
+        { name: "condicoes", label: "Condições de pagamento", type: "text", default: "À vista via PIX", placeholder: "Ex: parcelado ou à vista" },
+        { name: "prazoEntrega", label: "Prazo de entrega", type: "text", default: "até 7 dias úteis", placeholder: "Ex: 5 dias" },
+        { name: "foro", label: "Foro", type: "text", default: "Foro Central de Belo Horizonte/MG", placeholder: "Cidade" },
+        { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => `<h1 style="text-align:center;">CONTRATO DE COMPRA E VENDA</h1>
+      <p>Data: ${escapeHtml(vals.dataContrato)}</p>
+      <p><strong>VENDEDOR:</strong> ${escapeHtml(vals.vendedor)}<br><strong>COMPRADOR:</strong> ${escapeHtml(vals.comprador)}</p>
+      <h2>Objeto da Venda</h2>
+      <p>O objeto da presente compra e venda é: ${escapeHtml(vals.item)}.</p>
+      <h2>Preço e Condições</h2>
+      <p>O valor total da transação é de ${escapeHtml(vals.valorVenda)}, nas seguintes condições: ${escapeHtml(vals.condicoes)}.</p>
+      <h2>Entrega</h2>
+      <p>O prazo para entrega será de ${escapeHtml(vals.prazoEntrega)}.</p>
+      <h2>Foro</h2>
+      <p>Fica eleito o foro da ${escapeHtml(vals.foro)} para resolver eventuais litígios.</p>
+      ${getSignaturesBlock(vals.vendedor, vals.comprador)}`
+    },
+    trabalho: {
+      name: "Contrato de Trabalho (Prestador PJ)",
+      fields: [
+        { name: "empregador", label: "CONTRATANTE (Empresa)", type: "text", default: "Inova Solutions LTDA", placeholder: "Empresa" },
+        { name: "empregado", label: "PRESTADOR (Pessoa Física/Jurídica)", type: "text", default: "Gabriel Souza MEI", placeholder: "Nome" },
+        { name: "cargo", label: "Função / Cargo", type: "text", default: "Desenvolvedor Front-end", placeholder: "Cargo" },
+        { name: "salario", label: "Remuneração mensal (R$)", type: "text", default: "R$ 5.200,00", placeholder: "Valor" },
+        { name: "jornada", label: "Jornada semanal", type: "text", default: "30 horas semanais", placeholder: "Ex: 30h" },
+        { name: "beneficios", label: "Benefícios adicionais", type: "textarea", default: "Vale alimentação + auxílio home office", placeholder: "Descreva" },
+        { name: "foro", label: "Foro", type: "text", default: "Foro Trabalhista de Curitiba/PR", placeholder: "Foro" },
+        { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => `<h1 style="text-align:center;">CONTRATO DE PRESTAÇÃO DE SERVIÇOS (PJ)</h1>
+      <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
+      <p><strong>CONTRATANTE:</strong> ${escapeHtml(vals.empregador)}<br><strong>PRESTADOR:</strong> ${escapeHtml(vals.empregado)}</p>
+      <h2>Cláusula 1 – Função</h2>
+      <p>O prestador exercerá a função de ${escapeHtml(vals.cargo)}, conforme demanda do contratante.</p>
+      <h2>Cláusula 2 – Remuneração</h2>
+      <p>A remuneração mensal será de ${escapeHtml(vals.salario)}, com jornada de ${escapeHtml(vals.jornada)}.</p>
+      <h2>Benefícios</h2>
+      <p>${escapeHtml(vals.beneficios)}</p>
+      <h2>Foro</h2>
+      <p>Eleição do foro da ${escapeHtml(vals.foro)}.</p>
+      ${getSignaturesBlock(vals.empregador, vals.empregado)}`
+    },
+    emprestimo: {
+      name: "Contrato de Empréstimo Pessoal",
+      fields: [
+        { name: "credor", label: "CREDOR (Quem empresta)", type: "text", default: "Luciana Mendes", placeholder: "Nome" },
+        { name: "devedor", label: "DEVEDOR (Tomador)", type: "text", default: "Rafael Oliveira", placeholder: "Nome" },
+        { name: "valorEmprestimo", label: "Valor do empréstimo (R$)", type: "text", default: "R$ 3.000,00", placeholder: "Montante" },
+        { name: "juros", label: "Taxa de juros (% ao mês)", type: "text", default: "1,5% a.m.", placeholder: "Ex: 1,5%" },
+        { name: "prazoMeses", label: "Prazo para pagamento (meses)", type: "text", default: "6 meses", placeholder: "Ex: 6 meses" },
+        { name: "garantias", label: "Garantias (se houver)", type: "text", default: "Sem garantias", placeholder: "Ex: avalista" },
+        { name: "foro", label: "Foro", type: "text", default: "Comarca de Porto Alegre/RS", placeholder: "Foro" },
+        { name: "dataContrato", label: "Data", type: "text", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => `<h1 style="text-align:center;">CONTRATO DE EMPRÉSTIMO PESSOAL</h1>
+      <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
+      <p><strong>CREDOR:</strong> ${escapeHtml(vals.credor)}<br><strong>DEVEDOR:</strong> ${escapeHtml(vals.devedor)}</p>
+      <h2>Valor e Encargos</h2>
+      <p>O credor concede empréstimo no valor de ${escapeHtml(vals.valorEmprestimo)} ao devedor. Incidem juros de ${escapeHtml(vals.juros)}.</p>
+      <h2>Prazo e Amortização</h2>
+      <p>O valor será quitado em até ${escapeHtml(vals.prazoMeses)}. Garantias: ${escapeHtml(vals.garantias)}.</p>
+      <h2>Foro</h2>
+      <p>Fica fixado o foro da ${escapeHtml(vals.foro)} para ações decorrentes deste contrato.</p>
+      ${getSignaturesBlock(vals.credor, vals.devedor)}`
+    },
+    custom: {
+      name: "Contrato Personalizado",
+      fields: [
+        { name: "titulo", label: "Título do Contrato", type: "text", default: "CONTRATO PARTICULAR DE PARCERIA", placeholder: "Ex: Contrato de Licenciamento" },
+        { name: "parteA", label: "Parte A (Contratante / Primeira parte)", type: "text", default: "Organização Alpha", placeholder: "Nome" },
+        { name: "parteB", label: "Parte B (Contratado / Segunda parte)", type: "text", default: "Beta Soluções Ltda", placeholder: "Nome" },
+        { name: "corpoClausulas", label: "Cláusulas e condições (escreva todo o corpo do contrato)", type: "textarea", default: "As partes ajustam o presente instrumento para colaboração comercial no desenvolvimento de software, com prazo de 12 meses e investimento compartilhado. O sigilo das informações é obrigatório.", placeholder: "Digite todas as cláusulas livremente..." },
+        { name: "foro", label: "Foro de eleição", type: "text", default: "Foro Central da Comarca do Rio de Janeiro/RJ", placeholder: "Local" },
+        { name: "dataContrato", label: "Data do contrato", type: "text", default: new Date().toLocaleDateString('pt-BR') }
+      ],
+      template: (vals) => `<h1 style="text-align:center;">${escapeHtml(vals.titulo || "CONTRATO PERSONALIZADO")}</h1>
+      <p><strong>Data:</strong> ${escapeHtml(vals.dataContrato)}</p>
+      <p><strong>PARTE A:</strong> ${escapeHtml(vals.parteA)}<br><strong>PARTE B:</strong> ${escapeHtml(vals.parteB)}</p>
+      <h2>Cláusulas Contratuais</h2>
+      <p style="white-space: pre-wrap;">${escapeHtml(vals.corpoClausulas)}</p>
+      <h2>Foro</h2>
+      <p>As partes elegem o foro da ${escapeHtml(vals.foro)} para resolver quaisquer pendências.</p>
+      ${getSignaturesBlock(vals.parteA, vals.parteB)}`
+    }
+  };
+
+  function getSignaturesBlock(parte1, parte2) {
+    return `<div class="sign-line"><strong>${escapeHtml(parte1)}</strong><span>Assinatura</span></div>
+            <div class="sign-line"><strong>${escapeHtml(parte2)}</strong><span>Assinatura</span></div>`;
+  }
+
+  // renderizar campos dinâmicos com base no tipo atual e valores salvos
+  function renderDynamicFields() {
+    const container = document.getElementById('dynamicFieldsContainer');
+    const def = contractDefinitions[currentContractType];
+    if (!def) return;
+    let html = `<div class="badge-type"><i class="fas fa-file-contract"></i> ${def.name}</div>`;
+    def.fields.forEach(field => {
+      const value = currentFieldValues[field.name] !== undefined ? currentFieldValues[field.name] : field.default;
+      if (field.type === 'textarea') {
+        html += `<div class="form-group">
+          <label><i class="fas fa-pen-alt"></i> ${field.label}</label>
+          <textarea id="field_${field.name}" placeholder="${escapeHtml(field.placeholder || '')}" rows="3">${escapeHtml(value)}</textarea>
+        </div>`;
+      } else {
+        html += `<div class="form-group">
+          <label><i class="fas fa-font"></i> ${field.label}</label>
+          <input type="text" id="field_${field.name}" value="${escapeHtml(value)}" placeholder="${escapeHtml(field.placeholder || '')}">
+        </div>`;
+      }
+    });
+    container.innerHTML = html;
+    // adicionar event listeners a todos os campos gerados
+    def.fields.forEach(field => {
+      const el = document.getElementById(`field_${field.name}`);
+      if (el) {
+        el.addEventListener('input', (e) => {
+          currentFieldValues[field.name] = e.target.value;
+          updateContractPreview();
+        });
+      }
+    });
+  }
+
+  // atualizar pré-visualização com valores atuais
+  function updateContractPreview() {
+    const def = contractDefinitions[currentContractType];
+    if (!def) return;
+    // garantir que currentFieldValues tenha default para todos os campos (evitar undefined)
+    def.fields.forEach(f => {
+      if (currentFieldValues[f.name] === undefined) currentFieldValues[f.name] = f.default;
+    });
+    const contractHTML = def.template(currentFieldValues);
+    const previewDiv = document.getElementById('contractPreview');
+    previewDiv.innerHTML = contractHTML;
+    // adicionar classe responsiva para assinaturas
+    const signDivs = previewDiv.querySelectorAll('.sign-line');
+    if (signDivs.length) {
+      const wrap = document.createElement('div');
+      wrap.className = 'contract-sign';
+      signDivs.forEach(s => wrap.appendChild(s.cloneNode(true)));
+      const oldContainer = previewDiv.querySelector('.contract-sign');
+      if (oldContainer) oldContainer.remove();
+      previewDiv.appendChild(wrap);
+    } else {
+      if (!previewDiv.querySelector('.contract-sign')) {
+        const signBlock = document.createElement('div');
+        signBlock.className = 'contract-sign';
+        signBlock.innerHTML = `<div class="sign-line"><strong>PARTE A</strong><span>Assinatura</span></div><div class="sign-line"><strong>PARTE B</strong><span>Assinatura</span></div>`;
+        previewDiv.appendChild(signBlock);
+      }
+    }
+  }
+
+  // ao trocar tipo de contrato: reconfigurar campos + resetar valores padrão
+  function changeContractType(type) {
+    currentContractType = type;
+    const def = contractDefinitions[type];
+    if (!def) return;
+    // resetar currentFieldValues com defaults
+    const newValues = {};
+    def.fields.forEach(f => { newValues[f.name] = f.default; });
+    currentFieldValues = newValues;
+    renderDynamicFields();
+    updateContractPreview();
+  }
+
+  // ações de copiar e PDF
+  function copyContractText() {
+    const previewDiv = document.getElementById('contractPreview');
+    const textToCopy = previewDiv.innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      showToast("Contrato copiado para área de transferência!");
+    }).catch(() => showToast("Erro ao copiar", true));
+  }
+
+  function downloadPDF() {
+    const element = document.getElementById('contractPreview');
+    const opt = {
+      margin:        [0.5, 0.5, 0.5, 0.5],
+      filename:     `contrato_${currentContractType}_${Date.now()}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, letterRendering: true },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save().then(() => {
+      showToast("PDF gerado com sucesso!");
+    }).catch(() => showToast("Erro ao gerar PDF", true));
+  }
+
+  function printContract() {
+    const originalTitle = document.title;
+    const printContent = document.getElementById('contractPreview').cloneNode(true);
+    const win = window.open('', '_blank');
+    win.document.write(`
+      <html><head><title>Imprimir Contrato</title><style>
+        body { font-family: Georgia, serif; padding: 1.5rem; } .contract-sign { display: flex; justify-content: space-between; margin-top: 2rem; } .sign-line { text-align:center; }
+      </style></head><body>${printContent.outerHTML}</body></html>`);
+    win.document.close();
+    win.print();
+  }
+
+  // Eventos principais e inicialização
+  document.addEventListener('DOMContentLoaded', () => {
+    const typeSelect = document.getElementById('contractTypeSelect');
+    typeSelect.addEventListener('change', (e) => {
+      changeContractType(e.target.value);
+    });
+    document.getElementById('refreshPreviewBtn').addEventListener('click', () => {
+      updateContractPreview();
+      showToast("Contrato atualizado!");
+    });
+    document.getElementById('copyContractBtn').addEventListener('click', copyContractText);
+    document.getElementById('pdfDownloadBtn').addEventListener('click', downloadPDF);
+    document.getElementById('printContractBtn').addEventListener('click', printContract);
+    // inicializar com tipo padrão
+    changeContractType('prestacaoServicos');
+  });
+</script>
+</body>
+</html>
