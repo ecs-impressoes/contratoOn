@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Bolão Copa 2026 | México vs África</title>
+    <title>Bolão Copa 2026 | México vs África - Com Premiação</title>
     <style>
         * {
             margin: 0;
@@ -26,11 +25,8 @@
             border-radius: 2rem;
             box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            backdrop-filter: blur(2px);
-            transition: all 0.2s;
         }
 
-        /* Cabeçalho temático */
         .hero {
             background: linear-gradient(135deg, #023020 0%, #004d2e 100%);
             padding: 2rem 1.5rem;
@@ -47,7 +43,6 @@
             gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 0.75rem;
-            text-shadow: 2px 2px 0 #8b5a2b;
         }
 
         .hero h1 span {
@@ -56,8 +51,6 @@
             font-size: 1.1rem;
             padding: 0.2rem 0.8rem;
             border-radius: 40px;
-            font-weight: bold;
-            text-shadow: none;
         }
 
         .hero p {
@@ -66,26 +59,86 @@
             color: #f9e7b3;
         }
 
-        /* painel principal */
         .content {
             padding: 2rem 1.5rem;
         }
 
-        /* formulário */
+        /* Regras do Bolão - Destaque */
+        .regras-box {
+            background: linear-gradient(135deg, #fff8e7, #fff0d4);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid #e6b422;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .regras-box h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1e6f3f;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e6b422;
+            padding-bottom: 0.5rem;
+        }
+
+        .regras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .regra-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            border-left: 5px solid #e6b422;
+        }
+
+        .regra-item strong {
+            color: #1e6f3f;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .regra-item p {
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .premio-destaque {
+            background: #1e6f3f;
+            color: #ffd966;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .premio-destaque span {
+            font-size: 1.8rem;
+            display: block;
+            color: white;
+        }
+
         .form-card {
             background: white;
             border-radius: 1.5rem;
             padding: 1.5rem;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
-            border: 1px solid #e2dccd;
         }
 
         .form-group {
             margin-bottom: 1.2rem;
         }
 
-        input, .placar {
+        input, select {
             width: 100%;
             padding: 0.9rem 1rem;
             font-size: 1rem;
@@ -95,10 +148,32 @@
             background: #fefaf0;
         }
 
-        input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #e6b422;
             box-shadow: 0 0 0 3px rgba(230, 180, 34, 0.2);
+        }
+
+        .valor-aposta {
+            background: #f1e9d8;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .valor-aposta label {
+            font-weight: bold;
+            color: #1e6f3f;
+        }
+
+        .valor-aposta input {
+            width: 150px;
+            text-align: center;
+            background: white;
         }
 
         .placar {
@@ -108,6 +183,8 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            padding: 0.5rem;
+            border-radius: 1rem;
         }
 
         .placar label {
@@ -141,12 +218,16 @@
             transition: 0.2s;
             width: 100%;
             margin-top: 0.8rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         button:hover {
             background: #0f5431;
             transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
         }
 
         .btn-small {
@@ -155,28 +236,14 @@
             padding: 0.4rem 1rem;
             width: auto;
             margin-top: 0;
-            border-radius: 2rem;
         }
 
-        .btn-small:hover {
-            background: #8b6e2c;
-        }
-
-        .btn-danger {
-            background: #aa3e3e;
-        }
-        .btn-danger:hover {
-            background: #832e2e;
-        }
-
-        /* comprovante animado */
         .comprovante {
             background: #eef7e6;
             border-left: 12px solid #e6b422;
             border-radius: 1.5rem;
             padding: 1.5rem;
             margin: 1rem 0 2rem 0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             animation: fadeSlide 0.3s ease-out;
         }
 
@@ -185,43 +252,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .comprovante h3 {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            color: #2c5a2a;
-            border-bottom: 2px dashed #d4b87a;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .comprovante-detalhes {
-            background: white;
-            border-radius: 1rem;
-            padding: 1rem;
-            font-family: monospace;
-            font-size: 1rem;
-            margin: 1rem 0;
-            border: 1px solid #cfd8c0;
-        }
-
-        .comprovante-detalhes p {
-            margin: 0.5rem 0;
-        }
-
-        .comprovante-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        /* tabela */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 1.2rem;
             background: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
         }
 
         table {
@@ -234,14 +270,12 @@
             background: #1e3a2f;
             color: #ffecb3;
             padding: 12px 8px;
-            font-weight: 600;
         }
 
         td {
             padding: 12px 8px;
             text-align: center;
             border-bottom: 1px solid #e0dacb;
-            vertical-align: middle;
         }
 
         tr:hover {
@@ -256,45 +290,18 @@
             display: inline-block;
         }
 
-        .acoes-btn {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .ganhador-badge {
+            background: #e6b422;
+            color: #1e3a2f;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
         }
 
-        footer {
-            background: #1e2a22;
-            color: #cbad6a;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.75rem;
-            border-top: 1px solid #4f6b44;
-        }
-
-        @media (max-width: 700px) {
-            .container {
-                border-radius: 1rem;
-            }
-            .placar label {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            th, td {
-                font-size: 0.75rem;
-                padding: 8px 4px;
-            }
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-        }
-
-        .empty-message {
+        .loading {
             text-align: center;
             padding: 2rem;
-            color: #7a6e4e;
-            font-style: italic;
         }
 
         .total-badge {
@@ -304,7 +311,34 @@
             border-radius: 30px;
             padding: 0.2rem 1rem;
             font-weight: bold;
-            margin-bottom: 1rem;
+        }
+
+        .premio-atual {
+            background: #ffd966;
+            color: #1e3a2f;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            background: #1e2a22;
+            color: #cbad6a;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 700px) {
+            .placar label {
+                flex-direction: column;
+                align-items: center;
+            }
+            th, td {
+                font-size: 0.7rem;
+                padding: 6px 4px;
+            }
         }
     </style>
 </head>
@@ -315,17 +349,50 @@
             🏆 BOLÃO COPA 2026 🏆
             <span>MÉXICO 🆚 ÁFRICA</span>
         </h1>
-        <p>🇲🇽 Escolha o placar, registre seu palpite e receba seu comprovante 🇿🇦</p>
+        <p>🇲🇽 Aposte no placar e concorra a prêmios! 🇿🇦</p>
     </div>
 
     <div class="content">
-        <!-- formulário principal -->
+        <!-- REGRAS DO BOLÃO - DESTAQUE -->
+        <div class="regras-box">
+            <h2>📜 REGRAS DO BOLÃO</h2>
+            <div class="regras-grid">
+                <div class="regra-item">
+                    <strong>💰 Distribuição do Prêmio</strong>
+                    <p>• <strong>80%</strong> do valor total arrecadado é dividido entre os ganhadores<br>
+                    • <strong>20%</strong> é destinado à casa realizadora do bolão</p>
+                </div>
+                <div class="regra-item">
+                    <strong>👥 Múltiplos Ganhadores</strong>
+                    <p>Se houver <strong>mais de 1 ganhador</strong>, os 80% são divididos igualmente entre todos que acertaram o placar exato.</p>
+                </div>
+                <div class="regra-item">
+                    <strong>🏆 Ganhador Único</strong>
+                    <p>Se apenas <strong>1 pessoa acertar</strong> o placar, ela leva os 80% sozinha!</p>
+                </div>
+                <div class="regra-item">
+                    <strong>🔄 Acumulação</strong>
+                    <p>Não havendo nenhum ganhador (ninguém acertar o placar), os <strong>80% acumulam</strong> para o próximo jogo.</p>
+                </div>
+            </div>
+            <div class="premio-destaque" id="premioDestaque">
+                🎯 PRÊMIO ACUMULADO ATUAL:
+                <span id="premioAcumulado">R$ 0,00</span>
+                <small style="font-size: 0.8rem;">* 80% vai para o(s) ganhador(es)</small>
+            </div>
+        </div>
+
+        <!-- Formulário de Aposta -->
         <div class="form-card">
             <div class="form-group">
-                <input type="text" id="primeiroNome" placeholder="👉 Seu primeiro nome (ex: Carlos)" autocomplete="off">
+                <input type="text" id="primeiroNome" placeholder="👉 Seu primeiro nome" autocomplete="off">
             </div>
             <div class="form-group">
-                <input type="tel" id="telefoneCompleto" placeholder="📞 Telefone completo com DDD (ex: 11987654321)" autocomplete="off">
+                <input type="tel" id="telefoneCompleto" placeholder="📞 Telefone com DDD (ex: 11987654321)" autocomplete="off">
+            </div>
+            <div class="valor-aposta">
+                <label>💵 Valor da aposta (R$):</label>
+                <input type="number" id="valorAposta" min="1" step="1" value="10" placeholder="Valor em R$">
             </div>
             <div class="placar">
                 <label>🇲🇽 México:
@@ -335,321 +402,348 @@
                     <input type="number" id="golsAfrica" min="0" max="15" value="0" step="1">
                 </label>
             </div>
-            <button id="btnSalvarPalpite">⚽ SALVAR PALPITE ⚽</button>
-            <small style="display: block; text-align: center; margin-top: 12px; color: #4a5b3e;">* Após salvar, seu comprovante será gerado automaticamente</small>
+            <button id="btnSalvarPalpite">⚽ REGISTRAR APOSTA ⚽</button>
+            <small style="display: block; text-align: center; margin-top: 12px;">* Acertando o placar, você concorre a 80% do total apostado!</small>
         </div>
 
-        <!-- Área do comprovante dinâmico (oculta até salvar) -->
         <div id="comprovanteBox" style="display: none;"></div>
 
-        <!-- Lista de palpites registrados -->
-        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin: 1rem 0 0.5rem 0;">
-            <h2>📋 PALPITES REGISTRADOS</h2>
-            <span id="contadorPalpites" class="total-badge">0 palpites</span>
+        <!-- Estatísticas e Lista de Apostas -->
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-top: 1rem;">
+            <h2>📋 APOSTAS REGISTRADAS</h2>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <span id="contadorApostas" class="total-badge">0 apostas</span>
+                <span id="totalArrecadado" class="total-badge">R$ 0,00</span>
+            </div>
         </div>
+        
+        <!-- Botão para definir resultado real (apenas admin/simulação) -->
+        <div style="margin: 1rem 0; display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+            <input type="number" id="resultadoRealMexico" placeholder="México real" style="width: 100px;">
+            <input type="number" id="resultadoRealAfrica" placeholder="África real" style="width: 100px;">
+            <button id="btnDefinirResultado" class="btn-small" style="background:#1e6f3f; width: auto;">🏆 DEFINIR RESULTADO REAL</button>
+            <button id="btnCalcularGanhadores" class="btn-small" style="background:#ab8e3e; width: auto;">🔍 CALCULAR GANHADORES</button>
+        </div>
+
         <div class="table-wrapper">
-            <table id="tabelaPalpites">
+            <div id="loadingApostas" class="loading">Carregando apostas...</div>
+            <table id="tabelaApostas" style="display: none;">
                 <thead>
-                    <tr><th>Nome</th><th>Telefone</th><th>🇲🇽 México</th><th>🌍 África</th><th>Data/Hora</th><th>Comprovante</th><th></th></tr>
+                    <tr><th>Nome</th><th>Telefone</th><th>🇲🇽 México</th><th>🌍 África</th><th>Valor (R$)</th><th>Data/Hora</th><th>Status</th><th>Comprovante</th></tr>
                 </thead>
-                <tbody id="palpitesBody">
-                    <tr class="empty-message"><td colspan="7">Nenhum palpite registrado ainda. Seja o primeiro!</td></tr>
-                </tbody>
+                <tbody id="apostasBody"></tbody>
             </table>
         </div>
     </div>
     <footer>
-        🎫 Bolão Oficial • México x África • Copa do Mundo 2026 • Palpites salvos localmente • Seu comprovante tem valor simbólico
+        🎫 Bolão com Premiação • 80% para ganhadores • 20% casa • Acumula se não houver ganhador
     </footer>
 </div>
 
 <script>
-    // ======================== CONFIGURAÇÃO ==========================
-    const STORAGE_KEY = "bolaocopa2026_mexico_africa";
-    let palpites = [];        // array de objetos
+    // ==================== CONFIGURAÇÃO ====================
+    const STORAGE_KEY = "bolaocopa_premio_mexico_africa";
+    const RESULTADO_KEY = "resultado_real_jogo";
+    
+    let apostas = [];
+    let resultadoReal = { mexico: null, africa: null };
+    let premioAcumulado = 0; // valor acumulado de 80% de jogos anteriores sem ganhador
 
     // DOM elements
     const nomeInput = document.getElementById("primeiroNome");
     const telefoneInput = document.getElementById("telefoneCompleto");
+    const valorApostaInput = document.getElementById("valorAposta");
     const golsMexicoInput = document.getElementById("golsMexico");
     const golsAfricaInput = document.getElementById("golsAfrica");
     const btnSalvar = document.getElementById("btnSalvarPalpite");
     const comprovanteBox = document.getElementById("comprovanteBox");
-    const palpitesBody = document.getElementById("palpitesBody");
-    const contadorSpan = document.getElementById("contadorPalpites");
+    const apostasBody = document.getElementById("apostasBody");
+    const contadorSpan = document.getElementById("contadorApostas");
+    const totalArrecadadoSpan = document.getElementById("totalArrecadado");
+    const premioAcumuladoSpan = document.getElementById("premioAcumulado");
+    const tabela = document.getElementById("tabelaApostas");
+    const loadingDiv = document.getElementById("loadingApostas");
 
-    // ======================== FUNÇÕES AUXILIARES ====================
-    // Carregar dados do localStorage
-    function carregarPalpites() {
+    // ==================== FUNÇÕES ====================
+    function carregarDados() {
         const dados = localStorage.getItem(STORAGE_KEY);
         if (dados) {
             try {
-                palpites = JSON.parse(dados);
-                // garantir que todo palpite antigo tenha timestamp e id
-                if (!Array.isArray(palpites)) palpites = [];
-            } catch(e) { palpites = []; }
+                apostas = JSON.parse(dados);
+                if (!Array.isArray(apostas)) apostas = [];
+            } catch(e) { apostas = []; }
         } else {
-            palpites = [];
+            apostas = [];
         }
-        // garantir campos obrigatórios em casos de migração
-        palpites = palpites.filter(p => p && typeof p === 'object').map(p => {
-            if (!p.id) p.id = Date.now() + Math.random() * 10000;
-            if (!p.dataHora) p.dataHora = new Date(p.timestamp || Date.now()).toLocaleString('pt-BR');
-            return p;
+        
+        const resultadoSalvo = localStorage.getItem(RESULTADO_KEY);
+        if (resultadoSalvo) {
+            try {
+                resultadoReal = JSON.parse(resultadoSalvo);
+            } catch(e) { resultadoReal = { mexico: null, africa: null }; }
+        }
+        
+        // Carregar prêmio acumulado (valor que veio de jogos anteriores sem ganhador)
+        const acumuladoSalvo = localStorage.getItem("premio_acumulado_80");
+        if (acumuladoSalvo) {
+            premioAcumulado = parseFloat(acumuladoSalvo) || 0;
+        }
+        
+        atualizarEstatisticas();
+        renderizarTabela();
+    }
+
+    function salvarApostas() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(apostas));
+        atualizarEstatisticas();
+        renderizarTabela();
+    }
+
+    function salvarResultadoReal() {
+        localStorage.setItem(RESULTADO_KEY, JSON.stringify(resultadoReal));
+    }
+
+    function salvarPremioAcumulado() {
+        localStorage.setItem("premio_acumulado_80", premioAcumulado);
+        atualizarPremioDestaque();
+    }
+
+    function atualizarEstatisticas() {
+        const total = apostas.length;
+        const totalArrecadado = apostas.reduce((sum, aposta) => sum + (aposta.valor || 0), 0);
+        contadorSpan.innerText = total === 1 ? "1 aposta" : `${total} apostas`;
+        totalArrecadadoSpan.innerText = `R$ ${totalArrecadado.toFixed(2)}`;
+        
+        // Atualizar prêmio em destaque (80% do total arrecadado + acumulado)
+        const totalParaPremio = totalArrecadado + premioAcumulado;
+        const premio80 = totalParaPremio * 0.8;
+        premioAcumuladoSpan.innerText = `R$ ${premio80.toFixed(2)}`;
+    }
+
+    function atualizarPremioDestaque() {
+        const totalArrecadado = apostas.reduce((sum, aposta) => sum + (aposta.valor || 0), 0);
+        const totalParaPremio = totalArrecadado + premioAcumulado;
+        const premio80 = totalParaPremio * 0.8;
+        document.getElementById("premioAcumulado").innerText = `R$ ${premio80.toFixed(2)}`;
+    }
+
+    function calcularGanhadores() {
+        if (resultadoReal.mexico === null || resultadoReal.africa === null) {
+            alert("⚠️ Defina primeiro o resultado real do jogo!");
+            return null;
+        }
+        
+        const ganhadores = apostas.filter(aposta => 
+            aposta.golsMexico === resultadoReal.mexico && 
+            aposta.golsAfrica === resultadoReal.africa
+        );
+        
+        const totalArrecadado = apostas.reduce((sum, aposta) => sum + (aposta.valor || 0), 0);
+        const totalParaPremio = totalArrecadado + premioAcumulado;
+        const premioTotal = totalParaPremio * 0.8; // 80% vai para ganhadores
+        
+        let premioPorGanhador = 0;
+        let mensagem = "";
+        
+        if (ganhadores.length === 0) {
+            // Não houve ganhador: acumula os 80% para o próximo jogo
+            premioAcumulado += premioTotal;
+            salvarPremioAcumulado();
+            mensagem = `❌ NENHUM GANHADOR! O prêmio de R$ ${premioTotal.toFixed(2)} (80% do total) ACUMULOU para o próximo jogo!`;
+            alert(mensagem);
+        } else if (ganhadores.length === 1) {
+            premioPorGanhador = premioTotal;
+            mensagem = `🏆 GANHADOR ÚNICO! ${ganhadores[0].nome} leva R$ ${premioPorGanhador.toFixed(2)}!`;
+            alert(mensagem + `\nPalpite: ${ganhadores[0].golsMexico}x${ganhadores[0].golsAfrica}`);
+            // Reset acumulado após premiação
+            premioAcumulado = 0;
+            salvarPremioAcumulado();
+        } else {
+            premioPorGanhador = premioTotal / ganhadores.length;
+            mensagem = `👥 MÚLTIPLOS GANHADORES! ${ganhadores.length} pessoas acertaram! Cada um leva R$ ${premioPorGanhador.toFixed(2)}`;
+            alert(mensagem + `\nTotal do prêmio: R$ ${premioTotal.toFixed(2)}`);
+            premioAcumulado = 0;
+            salvarPremioAcumulado();
+        }
+        
+        // Atualizar status dos ganhadores na tabela
+        apostas.forEach(aposta => {
+            aposta.ehGanhador = ganhadores.some(g => g.id === aposta.id);
         });
-        atualizarContador();
-        renderizarTabela();
+        salvarApostas();
+        
+        return { ganhadores, premioTotal, premioPorGanhador };
     }
 
-    // Atualizar contador visual
-    function atualizarContador() {
-        const total = palpites.length;
-        contadorSpan.innerText = total === 1 ? "1 palpite" : `${total} palpites`;
-    }
-
-    // Salvar array no localStorage e atualizar interface
-    function persistirPalpites() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(palpites));
-        atualizarContador();
-        renderizarTabela();
-    }
-
-    // Validação completa dos campos
-    function validarCampos() {
-        let nome = nomeInput.value.trim();
-        if (nome === "") {
-            alert("❌ Por favor, digite o seu primeiro nome.");
-            nomeInput.focus();
-            return false;
-        }
-        if (nome.length < 2) {
-            alert("❌ Nome muito curto. Digite pelo menos 2 letras.");
-            return false;
-        }
-        // validação simples de telefone (apenas números, DDD + número, entre 10 e 11 dígitos comum Brasil)
-        let telefoneRaw = telefoneInput.value.trim();
-        let apenasNumeros = telefoneRaw.replace(/\D/g, '');
-        if (apenasNumeros === "") {
-            alert("❌ Informe o telefone completo com DDD (apenas números).");
-            telefoneInput.focus();
-            return false;
-        }
-        if (apenasNumeros.length < 10 || apenasNumeros.length > 12) {  // flex p/ possíveis 9 dígitos + 2 DDD = 11, mas 12 aceita outros
-            alert("📵 Telefone inválido! O DDD + número deve ter entre 10 e 12 dígitos. Exemplo: 11987654321");
-            telefoneInput.focus();
-            return false;
-        }
-        let golsMex = parseInt(golsMexicoInput.value);
-        let golsAfr = parseInt(golsAfricaInput.value);
-        if (isNaN(golsMex) || isNaN(golsAfr)) {
-            alert("⚽ Os gols devem ser números entre 0 e 15.");
-            return false;
-        }
-        if (golsMex < 0 || golsMex > 15 || golsAfr < 0 || golsAfr > 15) {
-            alert("🔢 Os gols devem estar entre 0 e 15.");
-            return false;
-        }
-        return { nome, telefone: apenasNumeros, golsMex, golsAfr };
-    }
-
-    // Gerar código único do comprovante
     function gerarCodigoComprovante(id, timestamp) {
         const parte = id.toString().slice(-6);
-        const dataShort = new Date(timestamp).toISOString().slice(2,10).replace(/-/g,'');
+        const dataShort = new Date(timestamp).toLocaleDateString('pt-BR').replace(/\//g, '');
         return `MEXAFR-${dataShort}-${parte}`;
     }
 
-    // Exibir comprovante na área dinâmica (tanto para novo salvamento quanto para reexibir)
-    function exibirComprovante(palpiteObj) {
-        const codigo = gerarCodigoComprovante(palpiteObj.id, palpiteObj.timestamp || palpiteObj.id);
-        const dataFormatada = palpiteObj.dataHora || new Date(palpiteObj.timestamp).toLocaleString('pt-BR');
-        const telefoneMascarado = palpiteObj.telefone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+    function exibirComprovante(aposta) {
+        const codigo = gerarCodigoComprovante(aposta.id, aposta.timestamp);
+        const totalArrecadado = apostas.reduce((sum, a) => sum + (a.valor || 0), 0);
+        const premioPotencial = (totalArrecadado + premioAcumulado) * 0.8;
         
         const html = `
             <div class="comprovante" id="comprovanteAtivo">
-                <h3>🧾 COMPROVANTE DE PALPITE 🧾</h3>
+                <h3>🧾 COMPROVANTE DE APOSTA 🧾</h3>
                 <div class="comprovante-detalhes">
-                    <p><strong>👤 Nome:</strong> ${escapeHtml(palpiteObj.nome)}</p>
-                    <p><strong>📞 Telefone:</strong> ${escapeHtml(telefoneMascarado)}</p>
-                    <p><strong>🇲🇽 México:</strong> ${palpiteObj.golsMexico} gols &nbsp;&nbsp;|&nbsp;&nbsp; <strong>🌍 África:</strong> ${palpiteObj.golsAfrica} gols</p>
-                    <p><strong>📅 Data/Hora:</strong> ${escapeHtml(dataFormatada)}</p>
-                    <p><strong>🔑 Código do comprovante:</strong> <span style="background:#f3e5ab; padding:4px 8px; border-radius:20px;">${codigo}</span></p>
-                    <p><strong>✅ Status:</strong> Palpite registrado com sucesso no bolão Copa 2026</p>
+                    <p><strong>👤 Nome:</strong> ${escapeHtml(aposta.nome)}</p>
+                    <p><strong>📞 Telefone:</strong> ${escapeHtml(aposta.telefone)}</p>
+                    <p><strong>🇲🇽 México:</strong> ${aposta.golsMexico} gols &nbsp;&nbsp;|&nbsp;&nbsp; <strong>🌍 África:</strong> ${aposta.golsAfrica} gols</p>
+                    <p><strong>💰 Valor Apostado:</strong> R$ ${(aposta.valor || 0).toFixed(2)}</p>
+                    <p><strong>📅 Data/Hora:</strong> ${escapeHtml(aposta.dataHora)}</p>
+                    <p><strong>🔑 Código:</strong> <span style="background:#f3e5ab; padding:4px 8px; border-radius:20px;">${codigo}</span></p>
+                    <p><strong>🏆 Prêmio potencial (se acertar):</strong> R$ ${premioPotencial.toFixed(2)}</p>
                 </div>
                 <div class="comprovante-actions">
-                    <button class="btn-small" id="btnImprimirComprovante">🖨️ Imprimir / Salvar PDF</button>
+                    <button class="btn-small" id="btnImprimirComprovante">🖨️ Imprimir</button>
                     <button class="btn-small btn-danger" id="btnFecharComprovante">✖️ Fechar</button>
                 </div>
             </div>
         `;
         comprovanteBox.style.display = "block";
         comprovanteBox.innerHTML = html;
-
-        // Eventos dos botões do comprovante
-        const btnImprimir = document.getElementById("btnImprimirComprovante");
-        const btnFechar = document.getElementById("btnFecharComprovante");
-        if (btnImprimir) {
-            btnImprimir.addEventListener("click", () => {
-                const conteudoComprovante = document.getElementById("comprovanteAtivo");
-                if (!conteudoComprovante) return;
-                const janela = window.open('', '_blank');
-                const estilo = `
-                    <style>
-                        body { font-family: monospace; padding: 2rem; background: #fff; }
-                        .comp { border: 2px solid #e6b422; border-radius: 20px; padding: 1.5rem; max-width: 500px; margin: auto; }
-                        h3 { color: #1e6f3f; }
-                    </style>
-                `;
-                janela.document.write(estilo + '<div class="comp">' + conteudoComprovante.innerHTML + '</div>');
-                janela.document.close();
-                janela.print();
-            });
-        }
-        if (btnFechar) {
-            btnFechar.addEventListener("click", () => {
-                comprovanteBox.style.display = "none";
-            });
-        }
-        // rolar até o comprovante
+        
+        document.getElementById("btnImprimirComprovante")?.addEventListener("click", () => {
+            const conteudo = document.getElementById("comprovanteAtivo");
+            const janela = window.open('', '_blank');
+            janela.document.write('<html><head><title>Comprovante</title><style>body{font-family:monospace;padding:2rem;}</style></head><body>' + conteudo.innerHTML + '</body></html>');
+            janela.document.close();
+            janela.print();
+        });
+        document.getElementById("btnFecharComprovante")?.addEventListener("click", () => {
+            comprovanteBox.style.display = "none";
+        });
         comprovanteBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Escapar HTML para segurança
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
+            return m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;';
         });
     }
 
-    // Adicionar novo palpite
-    function adicionarPalpite(nome, telefone, golsMexico, golsAfrica) {
-        const now = new Date();
-        const dataHoraLocal = now.toLocaleString('pt-BR');
-        const novoPalpite = {
-            id: Date.now() + Math.random() * 10000,
-            nome: nome,
-            telefone: telefone,
-            golsMexico: golsMexico,
-            golsAfrica: golsAfrica,
-            dataHora: dataHoraLocal,
-            timestamp: now.getTime()
-        };
-        palpites.push(novoPalpite);
-        persistirPalpites();   // salva e re-renderiza tabela
-        return novoPalpite;
+    function validarCampos() {
+        const nome = nomeInput.value.trim();
+        if (nome === "" || nome.length < 2) {
+            alert("❌ Digite seu nome.");
+            return null;
+        }
+        const telefone = telefoneInput.value.trim().replace(/\D/g, '');
+        if (telefone === "" || telefone.length < 10) {
+            alert("📵 Telefone inválido! Digite com DDD.");
+            return null;
+        }
+        const valor = parseFloat(valorApostaInput.value);
+        if (isNaN(valor) || valor < 1) {
+            alert("💵 Valor da aposta deve ser no mínimo R$ 1,00");
+            return null;
+        }
+        const golsMex = parseInt(golsMexicoInput.value);
+        const golsAfr = parseInt(golsAfricaInput.value);
+        if (isNaN(golsMex) || isNaN(golsAfr) || golsMex < 0 || golsMex > 15 || golsAfr < 0 || golsAfr > 15) {
+            alert("⚽ Gols entre 0 e 15.");
+            return null;
+        }
+        return { nome, telefone, valor, golsMex, golsAfr };
     }
 
-    // deletar palpite individual
-    function deletarPalpite(id) {
-        if (confirm("🗑️ Tem certeza que deseja remover este palpite? Essa ação é definitiva.")) {
-            palpites = palpites.filter(p => p.id !== id);
-            persistirPalpites();
-            // Se o comprovante estiver visível e o palpite deletado for o mesmo que está sendo exibido, esconder
-            if (comprovanteBox.style.display === 'block') {
-                comprovanteBox.style.display = 'none';
-            }
-        }
-    }
-
-    // Renderizar tabela com todos os palpites + botões
-    function renderizarTabela() {
-        if (!palpitesBody) return;
-        if (palpites.length === 0) {
-            palpitesBody.innerHTML = `<tr class="empty-message"><td colspan="7">🎯 Nenhum palpite registrado ainda. Faça o seu!</td></tr>`;
-            return;
-        }
-
-        // ordenar do mais recente para o mais antigo
-        const palpitesOrdenados = [...palpites].sort((a,b) => (b.timestamp || b.id) - (a.timestamp || a.id));
-        let html = '';
-        for (let palpite of palpitesOrdenados) {
-            const telefoneFormatado = palpite.telefone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
-            html += `
-                <tr>
-                    <td>${escapeHtml(palpite.nome)}</td>
-                    <td>${escapeHtml(telefoneFormatado)}</td>
-                    <td><span class="badge-placar">${palpite.golsMexico}</span></td>
-                    <td><span class="badge-placar">${palpite.golsAfrica}</span></td>
-                    <td style="font-size:0.75rem;">${escapeHtml(palpite.dataHora)}</td>
-                    <td><button class="btn-small" data-ver-comprovante="${palpite.id}" style="background:#b58c3a;">📄 Ver Comprovante</button></td>
-                    <td><button class="btn-small btn-danger" data-deletar="${palpite.id}">🗑️</button></td>
-                </tr>
-            `;
-        }
-        palpitesBody.innerHTML = html;
-
-        // Adicionar eventos dinâmicos na tabela (ver comprovante e deletar)
-        document.querySelectorAll('[data-ver-comprovante]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseFloat(btn.getAttribute('data-ver-comprovante'));
-                const palpiteEncontrado = palpites.find(p => p.id === id);
-                if (palpiteEncontrado) {
-                    exibirComprovante(palpiteEncontrado);
-                } else {
-                    alert("Palpite não encontrado.");
-                }
-            });
-        });
-
-        document.querySelectorAll('[data-deletar]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseFloat(btn.getAttribute('data-deletar'));
-                deletarPalpite(id);
-            });
-        });
-    }
-
-    // Função principal ao clicar em SALVAR
-    function salvarPalpiteHandler() {
+    function salvarAposta() {
         const validado = validarCampos();
         if (!validado) return;
         
-        const { nome, telefone, golsMex, golsAfr } = validado;
+        const agora = new Date();
+        const novaAposta = {
+            id: Date.now() + Math.random() * 10000,
+            nome: validado.nome,
+            telefone: validado.telefone,
+            valor: validado.valor,
+            golsMexico: validado.golsMex,
+            golsAfrica: validado.golsAfr,
+            dataHora: agora.toLocaleString('pt-BR'),
+            timestamp: agora.getTime(),
+            ehGanhador: false
+        };
         
-        // Criar novo palpite
-        const novoPalpite = adicionarPalpite(nome, telefone, golsMex, golsAfr);
+        apostas.push(novaAposta);
+        salvarApostas();
+        exibirComprovante(novaAposta);
         
-        // Gerar comprovante automaticamente após salvar
-        exibirComprovante(novoPalpite);
-        
-        // Opcional: limpar os campos de nome e telefone para nova aposta (mas manter os gols como estavam para facilidade)
         nomeInput.value = '';
         telefoneInput.value = '';
-        // Não resetamos gols para não atrapalhar (o usuário pode alterar depois)
-        // Deixar os seletores de gols com os valores que ele já escolheu (manter)
+        valorApostaInput.value = '10';
         
-        // Mensagem de sucesso sutil
-        // Pequeno efeito visual: feedback no botão
-        const btn = document.getElementById("btnSalvarPalpite");
-        const originalText = btn.innerText;
-        btn.innerText = "✅ SALVO! COMPROVANTE GERADO ✅";
+        btnSalvar.innerHTML = "✅ APOSTA REGISTRADA! ✅";
         setTimeout(() => {
-            btn.innerText = originalText;
-        }, 1800);
+            btnSalvar.innerHTML = "⚽ REGISTRAR APOSTA ⚽";
+        }, 2000);
     }
 
-    // Reinicialização e carregamento de dados
-    function init() {
-        carregarPalpites();
-        btnSalvar.addEventListener("click", salvarPalpiteHandler);
-        // opção adicional: tecla Enter pode não estar mapeada, mas é intuitivo
-        // evitar submissão de formulário fantasma
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    salvarPalpiteHandler();
-                }
+    function renderizarTabela() {
+        if (apostas.length === 0) {
+            apostasBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">🎯 Nenhuma aposta ainda. Seja o primeiro!</td></tr>';
+            tabela.style.display = 'table';
+            loadingDiv.style.display = 'none';
+            return;
+        }
+        
+        const apostasOrdenadas = [...apostas].sort((a,b) => b.timestamp - a.timestamp);
+        let html = '';
+        for (let aposta of apostasOrdenadas) {
+            const ganhadorHtml = aposta.ehGanhador ? '<span class="ganhador-badge">🏆 GANHADOR</span>' : '-';
+            html += `
+                <tr>
+                    <td>${escapeHtml(aposta.nome)}</td>
+                    <td>${escapeHtml(aposta.telefone)}</td>
+                    <td><span class="badge-placar">${aposta.golsMexico}</span></td>
+                    <td><span class="badge-placar">${aposta.golsAfrica}</span></td>
+                    <td>R$ ${(aposta.valor || 0).toFixed(2)}</td>
+                    <td style="font-size:0.75rem;">${escapeHtml(aposta.dataHora)}</td>
+                    <td>${ganhadorHtml}</td>
+                    <td><button class="btn-small" data-aposta='${JSON.stringify(aposta)}'>📄 Ver</button></td>
+                </tr>
+            `;
+        }
+        apostasBody.innerHTML = html;
+        
+        document.querySelectorAll('[data-aposta]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const aposta = JSON.parse(btn.getAttribute('data-aposta'));
+                exibirComprovante(aposta);
             });
         });
+        
+        tabela.style.display = 'table';
+        loadingDiv.style.display = 'none';
     }
 
-    init();
+    // Eventos
+    btnSalvar.addEventListener("click", salvarAposta);
+    
+    document.getElementById("btnDefinirResultado").addEventListener("click", () => {
+        const mex = parseInt(document.getElementById("resultadoRealMexico").value);
+        const afr = parseInt(document.getElementById("resultadoRealAfrica").value);
+        if (isNaN(mex) || isNaN(afr)) {
+            alert("Digite números válidos para o resultado real!");
+            return;
+        }
+        resultadoReal = { mexico: mex, africa: afr };
+        salvarResultadoReal();
+        alert(`✅ Resultado real definido: México ${mex} x ${afr} África`);
+    });
+    
+    document.getElementById("btnCalcularGanhadores").addEventListener("click", () => {
+        calcularGanhadores();
+        renderizarTabela();
+        atualizarEstatisticas();
+    });
+    
+    // Inicialização
+    carregarDados();
 </script>
 </body>
 </html>
-```
