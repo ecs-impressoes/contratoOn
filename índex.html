@@ -1,626 +1,655 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Álbum de Fotografias - Pronto para Impressão</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Bolão Copa 2026 | México vs África</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Poppins', 'Roboto', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            background: linear-gradient(145deg, #1a472a 0%, #0e2a1a 100%);
             min-height: 100vh;
+            padding: 1.5rem;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1280px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: rgba(255, 248, 225, 0.95);
+            border-radius: 2rem;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .main-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .sidebar {
-            flex: 1;
-            min-width: 250px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-        }
-
-        .canvas-area {
-            flex: 3;
-            min-width: 500px;
-        }
-
-        .upload-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .upload-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .control-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .control-group {
-            margin-bottom: 15px;
-        }
-
-        .control-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .control-group input, .control-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .btn {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            background: #764ba2;
-            transform: scale(1.05);
-        }
-
-        .btn-danger {
-            background: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .album-preview {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 600px;
-        }
-
-        .page {
-            background: white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page.a4 {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 0 auto 30px auto;
-            background: white;
-            position: relative;
-        }
-
-        .photo-item {
-            position: absolute;
-            cursor: move;
-            user-select: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: box-shadow 0.2s;
-        }
-
-        .photo-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .photo-item.selected {
-            outline: 3px solid #667eea;
-            outline-offset: 2px;
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            pointer-events: none;
-        }
-
-        .page-controls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255,255,255,0.9);
-            padding: 5px;
-            border-radius: 5px;
-            z-index: 10;
-        }
-
-        .photo-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .photo-thumb {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            margin: 5px;
-            cursor: pointer;
-            border: 2px solid transparent;
+            backdrop-filter: blur(2px);
             transition: all 0.2s;
         }
 
-        .photo-thumb:hover {
-            transform: scale(1.1);
+        /* Cabeçalho temático */
+        .hero {
+            background: linear-gradient(135deg, #023020 0%, #004d2e 100%);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: #ffd966;
+            border-bottom: 5px solid #e6b422;
         }
 
-        .photo-thumb.selected-thumb {
-            border-color: #667eea;
+        .hero h1 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+            text-shadow: 2px 2px 0 #8b5a2b;
         }
 
-        @media print {
-            body * {
-                visibility: hidden;
+        .hero h1 span {
+            background: #ffd966;
+            color: #1e3a2f;
+            font-size: 1.1rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-weight: bold;
+            text-shadow: none;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #f9e7b3;
+        }
+
+        /* painel principal */
+        .content {
+            padding: 2rem 1.5rem;
+        }
+
+        /* formulário */
+        .form-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid #e2dccd;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        input, .placar {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            border-radius: 1.2rem;
+            border: 1px solid #ccc;
+            transition: 0.2s;
+            background: #fefaf0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #e6b422;
+            box-shadow: 0 0 0 3px rgba(230, 180, 34, 0.2);
+        }
+
+        .placar {
+            display: flex;
+            gap: 1.2rem;
+            background: #fefaf0;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .placar label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            background: #f1e9d8;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+        }
+
+        .placar input {
+            width: 90px;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 2rem;
+            background: white;
+        }
+
+        button {
+            background: #1e6f3f;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #0f5431;
+            transform: scale(0.98);
+        }
+
+        .btn-small {
+            background: #ab8e3e;
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+            width: auto;
+            margin-top: 0;
+            border-radius: 2rem;
+        }
+
+        .btn-small:hover {
+            background: #8b6e2c;
+        }
+
+        .btn-danger {
+            background: #aa3e3e;
+        }
+        .btn-danger:hover {
+            background: #832e2e;
+        }
+
+        /* comprovante animado */
+        .comprovante {
+            background: #eef7e6;
+            border-left: 12px solid #e6b422;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0 2rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            animation: fadeSlide 0.3s ease-out;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comprovante h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            color: #2c5a2a;
+            border-bottom: 2px dashed #d4b87a;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comprovante-detalhes {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #cfd8c0;
+        }
+
+        .comprovante-detalhes p {
+            margin: 0.5rem 0;
+        }
+
+        .comprovante-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* tabela */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 1.2rem;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: #1e3a2f;
+            color: #ffecb3;
+            padding: 12px 8px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0dacb;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #fff7e8;
+        }
+
+        .badge-placar {
+            background: #ede0b9;
+            font-weight: bold;
+            border-radius: 40px;
+            padding: 4px 12px;
+            display: inline-block;
+        }
+
+        .acoes-btn {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            background: #1e2a22;
+            color: #cbad6a;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.75rem;
+            border-top: 1px solid #4f6b44;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                border-radius: 1rem;
             }
-            .page, .page * {
-                visibility: visible;
+            .placar label {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
-            .page {
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin: 0;
-                box-shadow: none;
-                page-break-after: always;
+            th, td {
+                font-size: 0.75rem;
+                padding: 8px 4px;
             }
-            .sidebar, .page-controls {
-                display: none;
+            .hero h1 {
+                font-size: 1.5rem;
             }
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #7a6e4e;
+            font-style: italic;
+        }
+
+        .total-badge {
+            background: #e6b422;
+            color: #1f3b2c;
+            display: inline-block;
+            border-radius: 30px;
+            padding: 0.2rem 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📸 Sistema de Álbum Fotográfico</h1>
-            <p>Crie, edite e prepare seu álbum para impressão profissional</p>
-        </div>
-
-        <div class="main-content">
-            <div class="sidebar">
-                <div class="upload-section">
-                    <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
-                    <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">
-                        📤 Adicionar Fotos
-                    </button>
-                </div>
-
-                <div class="control-panel">
-                    <h3>🎨 Controles da Foto Selecionada</h3>
-                    <div class="control-group">
-                        <label>Rotacionar:</label>
-                        <button class="btn" onclick="rotatePhoto(-90)">↺ -90°</button>
-                        <button class="btn" onclick="rotatePhoto(90)">↻ +90°</button>
-                    </div>
-                    <div class="control-group">
-                        <label>Largura (px):</label>
-                        <input type="range" id="widthSlider" min="50" max="400" value="200" onchange="resizePhoto()">
-                    </div>
-                    <div class="control-group">
-                        <label>Altura (px):</label>
-                        <input type="range" id="heightSlider" min="50" max="400" value="200" onchange="resizePhoto()">
-                    </div>
-                    <div class="control-group">
-                        <button class="btn" onclick="deleteSelectedPhoto()">🗑️ Remover Foto</button>
-                        <button class="btn btn-success" onclick="addNewPage()">📄 Nova Página</button>
-                        <button class="btn" onclick="printAlbum()">🖨️ Imprimir Álbum</button>
-                    </div>
-                </div>
-
-                <div class="control-panel">
-                    <h3>🖼️ Configuração da Página</h3>
-                    <div class="control-group">
-                        <label>Fundo da Página:</label>
-                        <input type="color" id="pageBgColor" value="#ffffff" onchange="changePageBackground()">
-                    </div>
-                    <div class="control-group">
-                        <label>Selecionar Página:</label>
-                        <select id="pageSelector" onchange="selectPage()"></select>
-                    </div>
-                </div>
-
-                <div class="control-panel">
-                    <h3>📋 Minhas Fotos</h3>
-                    <div id="photoList" class="photo-list"></div>
-                </div>
-            </div>
-
-            <div class="canvas-area">
-                <div id="albumContainer" class="album-preview"></div>
-            </div>
-        </div>
+<div class="container">
+    <div class="hero">
+        <h1>
+            🏆 BOLÃO COPA 2026 🏆
+            <span>MÉXICO 🆚 ÁFRICA</span>
+        </h1>
+        <p>🇲🇽 Escolha o placar, registre seu palpite e receba seu comprovante 🇿🇦</p>
     </div>
 
-    <script>
-        let pages = [];
-        let currentPageIndex = 0;
-        let selectedPhotoId = null;
-        let photosData = [];
-        let nextPhotoId = 1;
-        let isDragging = false;
-        let dragStartX, dragStartY, dragStartLeft, dragStartTop;
+    <div class="content">
+        <!-- formulário principal -->
+        <div class="form-card">
+            <div class="form-group">
+                <input type="text" id="primeiroNome" placeholder="👉 Seu primeiro nome (ex: Carlos)" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input type="tel" id="telefoneCompleto" placeholder="📞 Telefone completo com DDD (ex: 11987654321)" autocomplete="off">
+            </div>
+            <div class="placar">
+                <label>🇲🇽 México:
+                    <input type="number" id="golsMexico" min="0" max="15" value="0" step="1">
+                </label>
+                <label>🌍 África:
+                    <input type="number" id="golsAfrica" min="0" max="15" value="0" step="1">
+                </label>
+            </div>
+            <button id="btnSalvarPalpite">⚽ SALVAR PALPITE ⚽</button>
+            <small style="display: block; text-align: center; margin-top: 12px; color: #4a5b3e;">* Após salvar, seu comprovante será gerado automaticamente</small>
+        </div>
 
-        class Photo {
-            constructor(id, imgSrc, x, y, width, height, rotation) {
-                this.id = id;
-                this.imgSrc = imgSrc;
-                this.x = x;
-                this.y = y;
-                this.width = width;
-                this.height = height;
-                this.rotation = rotation || 0;
-            }
+        <!-- Área do comprovante dinâmico (oculta até salvar) -->
+        <div id="comprovanteBox" style="display: none;"></div>
+
+        <!-- Lista de palpites registrados -->
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin: 1rem 0 0.5rem 0;">
+            <h2>📋 PALPITES REGISTRADOS</h2>
+            <span id="contadorPalpites" class="total-badge">0 palpites</span>
+        </div>
+        <div class="table-wrapper">
+            <table id="tabelaPalpites">
+                <thead>
+                    <tr><th>Nome</th><th>Telefone</th><th>🇲🇽 México</th><th>🌍 África</th><th>Data/Hora</th><th>Comprovante</th><th></th></tr>
+                </thead>
+                <tbody id="palpitesBody">
+                    <tr class="empty-message"><td colspan="7">Nenhum palpite registrado ainda. Seja o primeiro!</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        🎫 Bolão Oficial • México x África • Copa do Mundo 2026 • Palpites salvos localmente • Seu comprovante tem valor simbólico
+    </footer>
+</div>
+
+<script>
+    // ======================== CONFIGURAÇÃO ==========================
+    const STORAGE_KEY = "bolaocopa2026_mexico_africa";
+    let palpites = [];        // array de objetos
+
+    // DOM elements
+    const nomeInput = document.getElementById("primeiroNome");
+    const telefoneInput = document.getElementById("telefoneCompleto");
+    const golsMexicoInput = document.getElementById("golsMexico");
+    const golsAfricaInput = document.getElementById("golsAfrica");
+    const btnSalvar = document.getElementById("btnSalvarPalpite");
+    const comprovanteBox = document.getElementById("comprovanteBox");
+    const palpitesBody = document.getElementById("palpitesBody");
+    const contadorSpan = document.getElementById("contadorPalpites");
+
+    // ======================== FUNÇÕES AUXILIARES ====================
+    // Carregar dados do localStorage
+    function carregarPalpites() {
+        const dados = localStorage.getItem(STORAGE_KEY);
+        if (dados) {
+            try {
+                palpites = JSON.parse(dados);
+                // garantir que todo palpite antigo tenha timestamp e id
+                if (!Array.isArray(palpites)) palpites = [];
+            } catch(e) { palpites = []; }
+        } else {
+            palpites = [];
         }
+        // garantir campos obrigatórios em casos de migração
+        palpites = palpites.filter(p => p && typeof p === 'object').map(p => {
+            if (!p.id) p.id = Date.now() + Math.random() * 10000;
+            if (!p.dataHora) p.dataHora = new Date(p.timestamp || Date.now()).toLocaleString('pt-BR');
+            return p;
+        });
+        atualizarContador();
+        renderizarTabela();
+    }
 
-        class Page {
-            constructor(index) {
-                this.index = index;
-                this.photos = [];
-                this.backgroundColor = '#ffffff';
-            }
+    // Atualizar contador visual
+    function atualizarContador() {
+        const total = palpites.length;
+        contadorSpan.innerText = total === 1 ? "1 palpite" : `${total} palpites`;
+    }
+
+    // Salvar array no localStorage e atualizar interface
+    function persistirPalpites() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(palpites));
+        atualizarContador();
+        renderizarTabela();
+    }
+
+    // Validação completa dos campos
+    function validarCampos() {
+        let nome = nomeInput.value.trim();
+        if (nome === "") {
+            alert("❌ Por favor, digite o seu primeiro nome.");
+            nomeInput.focus();
+            return false;
         }
-
-        function init() {
-            addNewPage();
-            document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
+        if (nome.length < 2) {
+            alert("❌ Nome muito curto. Digite pelo menos 2 letras.");
+            return false;
         }
-
-        function addNewPage() {
-            const newPage = new Page(pages.length);
-            pages.push(newPage);
-            currentPageIndex = pages.length - 1;
-            updatePageSelector();
-            renderAlbum();
+        // validação simples de telefone (apenas números, DDD + número, entre 10 e 11 dígitos comum Brasil)
+        let telefoneRaw = telefoneInput.value.trim();
+        let apenasNumeros = telefoneRaw.replace(/\D/g, '');
+        if (apenasNumeros === "") {
+            alert("❌ Informe o telefone completo com DDD (apenas números).");
+            telefoneInput.focus();
+            return false;
         }
-
-        function updatePageSelector() {
-            const selector = document.getElementById('pageSelector');
-            selector.innerHTML = '';
-            pages.forEach((page, idx) => {
-                const option = document.createElement('option');
-                option.value = idx;
-                option.textContent = `Página ${idx + 1} (${page.photos.length} fotos)`;
-                if (idx === currentPageIndex) option.selected = true;
-                selector.appendChild(option);
-            });
+        if (apenasNumeros.length < 10 || apenasNumeros.length > 12) {  // flex p/ possíveis 9 dígitos + 2 DDD = 11, mas 12 aceita outros
+            alert("📵 Telefone inválido! O DDD + número deve ter entre 10 e 12 dígitos. Exemplo: 11987654321");
+            telefoneInput.focus();
+            return false;
         }
-
-        function selectPage() {
-            currentPageIndex = parseInt(document.getElementById('pageSelector').value);
-            renderAlbum();
-            selectedPhotoId = null;
+        let golsMex = parseInt(golsMexicoInput.value);
+        let golsAfr = parseInt(golsAfricaInput.value);
+        if (isNaN(golsMex) || isNaN(golsAfr)) {
+            alert("⚽ Os gols devem ser números entre 0 e 15.");
+            return false;
         }
-
-        function handleImageUpload(e) {
-            const files = Array.from(e.target.files);
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const photo = new Photo(
-                            nextPhotoId++,
-                            event.target.result,
-                            50,
-                            50,
-                            200,
-                            200,
-                            0
-                        );
-                        pages[currentPageIndex].photos.push(photo);
-                        photosData.push({ id: photo.id, src: event.target.result });
-                        updatePhotoList();
-                        renderAlbum();
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+        if (golsMex < 0 || golsMex > 15 || golsAfr < 0 || golsAfr > 15) {
+            alert("🔢 Os gols devem estar entre 0 e 15.");
+            return false;
         }
+        return { nome, telefone: apenasNumeros, golsMex, golsAfr };
+    }
 
-        function updatePhotoList() {
-            const photoListDiv = document.getElementById('photoList');
-            photoListDiv.innerHTML = '';
-            photosData.forEach(photo => {
-                const img = document.createElement('img');
-                img.src = photo.src;
-                img.className = 'photo-thumb';
-                img.onclick = () => addPhotoToCurrentPage(photo.id);
-                photoListDiv.appendChild(img);
-            });
-        }
+    // Gerar código único do comprovante
+    function gerarCodigoComprovante(id, timestamp) {
+        const parte = id.toString().slice(-6);
+        const dataShort = new Date(timestamp).toISOString().slice(2,10).replace(/-/g,'');
+        return `MEXAFR-${dataShort}-${parte}`;
+    }
 
-        function addPhotoToCurrentPage(photoId) {
-            const photoData = photosData.find(p => p.id === photoId);
-            if (photoData) {
-                const newPhoto = new Photo(
-                    nextPhotoId++,
-                    photoData.src,
-                    50 + Math.random() * 100,
-                    50 + Math.random() * 100,
-                    200,
-                    200,
-                    0
-                );
-                pages[currentPageIndex].photos.push(newPhoto);
-                renderAlbum();
-            }
-        }
+    // Exibir comprovante na área dinâmica (tanto para novo salvamento quanto para reexibir)
+    function exibirComprovante(palpiteObj) {
+        const codigo = gerarCodigoComprovante(palpiteObj.id, palpiteObj.timestamp || palpiteObj.id);
+        const dataFormatada = palpiteObj.dataHora || new Date(palpiteObj.timestamp).toLocaleString('pt-BR');
+        const telefoneMascarado = palpiteObj.telefone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+        
+        const html = `
+            <div class="comprovante" id="comprovanteAtivo">
+                <h3>🧾 COMPROVANTE DE PALPITE 🧾</h3>
+                <div class="comprovante-detalhes">
+                    <p><strong>👤 Nome:</strong> ${escapeHtml(palpiteObj.nome)}</p>
+                    <p><strong>📞 Telefone:</strong> ${escapeHtml(telefoneMascarado)}</p>
+                    <p><strong>🇲🇽 México:</strong> ${palpiteObj.golsMexico} gols &nbsp;&nbsp;|&nbsp;&nbsp; <strong>🌍 África:</strong> ${palpiteObj.golsAfrica} gols</p>
+                    <p><strong>📅 Data/Hora:</strong> ${escapeHtml(dataFormatada)}</p>
+                    <p><strong>🔑 Código do comprovante:</strong> <span style="background:#f3e5ab; padding:4px 8px; border-radius:20px;">${codigo}</span></p>
+                    <p><strong>✅ Status:</strong> Palpite registrado com sucesso no bolão Copa 2026</p>
+                </div>
+                <div class="comprovante-actions">
+                    <button class="btn-small" id="btnImprimirComprovante">🖨️ Imprimir / Salvar PDF</button>
+                    <button class="btn-small btn-danger" id="btnFecharComprovante">✖️ Fechar</button>
+                </div>
+            </div>
+        `;
+        comprovanteBox.style.display = "block";
+        comprovanteBox.innerHTML = html;
 
-        function renderAlbum() {
-            const container = document.getElementById('albumContainer');
-            container.innerHTML = '';
-            
-            pages.forEach((page, pageIdx) => {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'page a4';
-                pageDiv.id = `page-${pageIdx}`;
-                pageDiv.style.backgroundColor = page.backgroundColor;
-                pageDiv.style.position = 'relative';
-                
-                // Page controls
-                const controls = document.createElement('div');
-                controls.className = 'page-controls';
-                controls.innerHTML = `
-                    <button class="btn" style="padding: 5px 10px; font-size: 12px;" onclick="clearPage(${pageIdx})">Limpar Página</button>
-                    ${pages.length > 1 ? `<button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="deletePage(${pageIdx})">Excluir Página</button>` : ''}
+        // Eventos dos botões do comprovante
+        const btnImprimir = document.getElementById("btnImprimirComprovante");
+        const btnFechar = document.getElementById("btnFecharComprovante");
+        if (btnImprimir) {
+            btnImprimir.addEventListener("click", () => {
+                const conteudoComprovante = document.getElementById("comprovanteAtivo");
+                if (!conteudoComprovante) return;
+                const janela = window.open('', '_blank');
+                const estilo = `
+                    <style>
+                        body { font-family: monospace; padding: 2rem; background: #fff; }
+                        .comp { border: 2px solid #e6b422; border-radius: 20px; padding: 1.5rem; max-width: 500px; margin: auto; }
+                        h3 { color: #1e6f3f; }
+                    </style>
                 `;
-                pageDiv.appendChild(controls);
-                
-                page.photos.forEach(photo => {
-                    const photoDiv = document.createElement('div');
-                    photoDiv.className = `photo-item ${selectedPhotoId === photo.id ? 'selected' : ''}`;
-                    photoDiv.id = `photo-${photo.id}`;
-                    photoDiv.style.position = 'absolute';
-                    photoDiv.style.left = `${photo.x}px`;
-                    photoDiv.style.top = `${photo.y}px`;
-                    photoDiv.style.width = `${photo.width}px`;
-                    photoDiv.style.height = `${photo.height}px`;
-                    photoDiv.style.transform = `rotate(${photo.rotation}deg)`;
-                    photoDiv.style.cursor = 'move';
-                    
-                    const img = document.createElement('img');
-                    img.src = photo.imgSrc;
-                    photoDiv.appendChild(img);
-                    
-                    photoDiv.onclick = (e) => {
-                        e.stopPropagation();
-                        selectPhoto(photo.id, pageIdx);
-                    };
-                    
-                    photoDiv.onmousedown = (e) => startDrag(e, photo.id, pageIdx);
-                    
-                    pageDiv.appendChild(photoDiv);
-                });
-                
-                container.appendChild(pageDiv);
+                janela.document.write(estilo + '<div class="comp">' + conteudoComprovante.innerHTML + '</div>');
+                janela.document.close();
+                janela.print();
             });
         }
-
-        function selectPhoto(photoId, pageIdx) {
-            if (currentPageIndex !== pageIdx) {
-                currentPageIndex = pageIdx;
-                updatePageSelector();
-            }
-            selectedPhotoId = photoId;
-            const photo = pages[currentPageIndex].photos.find(p => p.id === photoId);
-            if (photo) {
-                document.getElementById('widthSlider').value = photo.width;
-                document.getElementById('heightSlider').value = photo.height;
-            }
-            renderAlbum();
+        if (btnFechar) {
+            btnFechar.addEventListener("click", () => {
+                comprovanteBox.style.display = "none";
+            });
         }
+        // rolar até o comprovante
+        comprovanteBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-        function startDrag(e, photoId, pageIdx) {
-            if (currentPageIndex !== pageIdx) {
-                selectPhoto(photoId, pageIdx);
-            }
-            
-            isDragging = true;
-            const photo = pages[currentPageIndex].photos.find(p => p.id === photoId);
-            if (!photo) return;
-            
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
-            dragStartLeft = photo.x;
-            dragStartTop = photo.y;
-            
-            document.onmousemove = onDrag;
-            document.onmouseup = stopDrag;
-            e.preventDefault();
-        }
+    // Escapar HTML para segurança
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
 
-        function onDrag(e) {
-            if (!isDragging || selectedPhotoId === null) return;
-            
-            const photo = pages[currentPageIndex].photos.find(p => p.id === selectedPhotoId);
-            if (!photo) return;
-            
-            const deltaX = e.clientX - dragStartX;
-            const deltaY = e.clientY - dragStartY;
-            
-            let newX = dragStartLeft + deltaX;
-            let newY = dragStartTop + deltaY;
-            
-            // Constrain to page boundaries
-            newX = Math.max(0, Math.min(newX, 2100 - photo.width));
-            newY = Math.max(0, Math.min(newY, 2970 - photo.height));
-            
-            photo.x = newX;
-            photo.y = newY;
-            
-            renderAlbum();
-        }
+    // Adicionar novo palpite
+    function adicionarPalpite(nome, telefone, golsMexico, golsAfrica) {
+        const now = new Date();
+        const dataHoraLocal = now.toLocaleString('pt-BR');
+        const novoPalpite = {
+            id: Date.now() + Math.random() * 10000,
+            nome: nome,
+            telefone: telefone,
+            golsMexico: golsMexico,
+            golsAfrica: golsAfrica,
+            dataHora: dataHoraLocal,
+            timestamp: now.getTime()
+        };
+        palpites.push(novoPalpite);
+        persistirPalpites();   // salva e re-renderiza tabela
+        return novoPalpite;
+    }
 
-        function stopDrag() {
-            isDragging = false;
-            document.onmousemove = null;
-            document.onmouseup = null;
-        }
-
-        function rotatePhoto(degrees) {
-            if (selectedPhotoId === null) {
-                alert('Selecione uma foto primeiro!');
-                return;
-            }
-            
-            const photo = pages[currentPageIndex].photos.find(p => p.id === selectedPhotoId);
-            if (photo) {
-                photo.rotation = (photo.rotation + degrees) % 360;
-                renderAlbum();
+    // deletar palpite individual
+    function deletarPalpite(id) {
+        if (confirm("🗑️ Tem certeza que deseja remover este palpite? Essa ação é definitiva.")) {
+            palpites = palpites.filter(p => p.id !== id);
+            persistirPalpites();
+            // Se o comprovante estiver visível e o palpite deletado for o mesmo que está sendo exibido, esconder
+            if (comprovanteBox.style.display === 'block') {
+                comprovanteBox.style.display = 'none';
             }
         }
+    }
 
-        function resizePhoto() {
-            if (selectedPhotoId === null) return;
-            
-            const photo = pages[currentPageIndex].photos.find(p => p.id === selectedPhotoId);
-            if (photo) {
-                photo.width = parseInt(document.getElementById('widthSlider').value);
-                photo.height = parseInt(document.getElementById('heightSlider').value);
-                renderAlbum();
-            }
+    // Renderizar tabela com todos os palpites + botões
+    function renderizarTabela() {
+        if (!palpitesBody) return;
+        if (palpites.length === 0) {
+            palpitesBody.innerHTML = `<tr class="empty-message"><td colspan="7">🎯 Nenhum palpite registrado ainda. Faça o seu!</td></tr>`;
+            return;
         }
 
-        function deleteSelectedPhoto() {
-            if (selectedPhotoId === null) {
-                alert('Selecione uma foto para remover');
-                return;
-            }
-            
-            pages[currentPageIndex].photos = pages[currentPageIndex].photos.filter(p => p.id !== selectedPhotoId);
-            selectedPhotoId = null;
-            renderAlbum();
+        // ordenar do mais recente para o mais antigo
+        const palpitesOrdenados = [...palpites].sort((a,b) => (b.timestamp || b.id) - (a.timestamp || a.id));
+        let html = '';
+        for (let palpite of palpitesOrdenados) {
+            const telefoneFormatado = palpite.telefone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+            html += `
+                <tr>
+                    <td>${escapeHtml(palpite.nome)}</td>
+                    <td>${escapeHtml(telefoneFormatado)}</td>
+                    <td><span class="badge-placar">${palpite.golsMexico}</span></td>
+                    <td><span class="badge-placar">${palpite.golsAfrica}</span></td>
+                    <td style="font-size:0.75rem;">${escapeHtml(palpite.dataHora)}</td>
+                    <td><button class="btn-small" data-ver-comprovante="${palpite.id}" style="background:#b58c3a;">📄 Ver Comprovante</button></td>
+                    <td><button class="btn-small btn-danger" data-deletar="${palpite.id}">🗑️</button></td>
+                </tr>
+            `;
         }
+        palpitesBody.innerHTML = html;
 
-        function clearPage(pageIdx) {
-            if (confirm('Tem certeza que deseja limpar todas as fotos desta página?')) {
-                pages[pageIdx].photos = [];
-                if (pageIdx === currentPageIndex) {
-                    selectedPhotoId = null;
+        // Adicionar eventos dinâmicos na tabela (ver comprovante e deletar)
+        document.querySelectorAll('[data-ver-comprovante]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseFloat(btn.getAttribute('data-ver-comprovante'));
+                const palpiteEncontrado = palpites.find(p => p.id === id);
+                if (palpiteEncontrado) {
+                    exibirComprovante(palpiteEncontrado);
+                } else {
+                    alert("Palpite não encontrado.");
                 }
-                renderAlbum();
-            }
-        }
-
-        function deletePage(pageIdx) {
-            if (pages.length === 1) {
-                alert('Não é possível excluir a única página do álbum!');
-                return;
-            }
-            
-            if (confirm(`Tem certeza que deseja excluir a página ${pageIdx + 1}?`)) {
-                pages.splice(pageIdx, 1);
-                if (currentPageIndex >= pages.length) {
-                    currentPageIndex = pages.length - 1;
-                }
-                if (selectedPhotoId !== null) {
-                    selectedPhotoId = null;
-                }
-                updatePageSelector();
-                renderAlbum();
-            }
-        }
-
-        function changePageBackground() {
-            const color = document.getElementById('pageBgColor').value;
-            pages[currentPageIndex].backgroundColor = color;
-            renderAlbum();
-        }
-
-        function printAlbum() {
-            const originalTitle = document.title;
-            document.title = 'Álbum de Fotos - Impressão';
-            window.print();
-            document.title = originalTitle;
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Delete' && selectedPhotoId !== null) {
-                deleteSelectedPhoto();
-            }
-            if (e.key === 'r' || e.key === 'R') {
-                rotatePhoto(90);
-                e.preventDefault();
-            }
+            });
         });
 
-        // Initialize the app
-        init();
-    </script>
+        document.querySelectorAll('[data-deletar]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseFloat(btn.getAttribute('data-deletar'));
+                deletarPalpite(id);
+            });
+        });
+    }
+
+    // Função principal ao clicar em SALVAR
+    function salvarPalpiteHandler() {
+        const validado = validarCampos();
+        if (!validado) return;
+        
+        const { nome, telefone, golsMex, golsAfr } = validado;
+        
+        // Criar novo palpite
+        const novoPalpite = adicionarPalpite(nome, telefone, golsMex, golsAfr);
+        
+        // Gerar comprovante automaticamente após salvar
+        exibirComprovante(novoPalpite);
+        
+        // Opcional: limpar os campos de nome e telefone para nova aposta (mas manter os gols como estavam para facilidade)
+        nomeInput.value = '';
+        telefoneInput.value = '';
+        // Não resetamos gols para não atrapalhar (o usuário pode alterar depois)
+        // Deixar os seletores de gols com os valores que ele já escolheu (manter)
+        
+        // Mensagem de sucesso sutil
+        // Pequeno efeito visual: feedback no botão
+        const btn = document.getElementById("btnSalvarPalpite");
+        const originalText = btn.innerText;
+        btn.innerText = "✅ SALVO! COMPROVANTE GERADO ✅";
+        setTimeout(() => {
+            btn.innerText = originalText;
+        }, 1800);
+    }
+
+    // Reinicialização e carregamento de dados
+    function init() {
+        carregarPalpites();
+        btnSalvar.addEventListener("click", salvarPalpiteHandler);
+        // opção adicional: tecla Enter pode não estar mapeada, mas é intuitivo
+        // evitar submissão de formulário fantasma
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    salvarPalpiteHandler();
+                }
+            });
+        });
+    }
+
+    init();
+</script>
 </body>
 </html>
+```
